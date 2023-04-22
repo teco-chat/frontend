@@ -30,6 +30,6 @@ const toggleTheme = () => {
 
 <style scoped>
 .title {
-    font-family: "Do Hyeon"
+    font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
 }
 </style>
