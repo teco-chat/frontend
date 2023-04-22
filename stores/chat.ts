@@ -14,12 +14,27 @@ export const useChatStore = defineStore("chat", () => {
       return;
     }
     load.value = true;
-    const response = await useFetch("/api/chat", {
-      method: "post",
-      body: { text: query.value },
-    });
-    result.value = response.data.value;
-    load.value = false;
+    try {
+      const response: any = await $fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${useRuntimeConfig().public.gptApiToken}`
+          },
+          body: {
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: query.value }],
+          },
+        }
+      );
+      result.value = response.choices[0].message.content;
+      load.value = false;
+    } catch (error) {ㄴ
+      result.value = "GPT 서버가 응답하지 않습니다.";
+      load.value = false;
+    };
   };
 
   return { query, result, load, chat, clear };

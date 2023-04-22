@@ -17,4 +17,9 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
   ],
+  runtimeConfig: {
+    public: {
+      gptApiToken: process.env.GPT_API_TOKEN || "",
+    }
+  }
 })
