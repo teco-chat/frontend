@@ -21,7 +21,7 @@ export const useChatStore = defineStore("chat", () => {
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${useRuntimeConfig().public.gptApiToken}`
+            Authorization: `Bearer ${useRuntimeConfig().public.gptApiToken}`,
           },
           body: {
             model: "gpt-3.5-turbo",
@@ -29,13 +29,22 @@ export const useChatStore = defineStore("chat", () => {
           },
         }
       );
-      console.log(response.choices[0].message.content);
-      result.value = (response.choices[0].message.content).replace(/\n/g, '<br>');
+      result.value = replaceCodeFences(response.choices[0].message.content);
       load.value = false;
     } catch (error) {
       result.value = "GPT 서버가 응답하지 않습니다.";
       load.value = false;
-    };
+    }
+  };
+
+  const replaceCodeFences = (input: String) => {
+    const codeFencesRegex = /```([\w-]*)\n([\s\S]*?)\n```/g;
+    return input
+      .replace(codeFencesRegex, (match, p1, p2) => {
+        const languageClass = p1 ? ` class="language-${p1}"` : "";
+        return `<pre><code${languageClass}>${p2}</code></pre>`;
+      })
+      .replace(/\n/g, "<br>");
   };
 
   return { query, result, load, chat, clear };
