@@ -1,4 +1,9 @@
 <template>
+  <div>
+    <Head>
+      <Title>우아GPT</Title>
+    </Head>
+  </div>
   <v-layout>
     <v-app-bar flat>
       <v-app-bar-title class="title">우아GPT</v-app-bar-title>
@@ -30,6 +35,6 @@ const toggleTheme = () => {
 
 <style scoped>
 .title {
-    font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
 }
 </style>
