@@ -11,5 +11,10 @@
   "devDependencies": {
     "@types/node": "^18",
     "nuxt": "^3.4.2"
+  },
+  "dependencies": {
+    "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
+    "@pinia/nuxt": "^0.4.9",
+    "vuetify": "^3.1.14"
   }
 }
