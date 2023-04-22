@@ -94,7 +94,6 @@ export default {
     .hljs-name,
     .hljs-regexp,
     .hljs-link,
-    .hljs-name,
     .hljs-selector-id,
     .hljs-selector-class {
       color: #F98181;
