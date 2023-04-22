@@ -26,7 +26,6 @@ const toggleTheme = () => {
       ? "mdi-weather-sunny"
       : "mdi-weather-night";
 };
-
 </script>
 
 <style scoped>
