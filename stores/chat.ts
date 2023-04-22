@@ -31,7 +31,7 @@ export const useChatStore = defineStore("chat", () => {
       );
       result.value = response.choices[0].message.content;
       load.value = false;
-    } catch (error) {ㄴ
+    } catch (error) {
       result.value = "GPT 서버가 응답하지 않습니다.";
       load.value = false;
     };
