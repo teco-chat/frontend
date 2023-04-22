@@ -29,7 +29,8 @@ export const useChatStore = defineStore("chat", () => {
           },
         }
       );
-      result.value = response.choices[0].message.content;
+      console.log(response.choices[0].message.content);
+      result.value = (response.choices[0].message.content).replace(/\n/g, '<br>');
       load.value = false;
     } catch (error) {
       result.value = "GPT 서버가 응답하지 않습니다.";

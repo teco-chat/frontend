@@ -34,7 +34,8 @@
       <br />
       <v-card v-if="chatStore.result != ''">
         <v-card-text>
-          {{ chatStore.result }}
+          <Tiptap v-model="chatStore.result"></Tiptap>
+        
         </v-card-text>
       </v-card>
     </v-container>
@@ -43,6 +44,8 @@
 
 <script lang="ts" setup>
 import { useChatStore } from "~~/stores/chat";
+import Tiptap from '~/components/Tiptap.vue'
+
 const chatStore = useChatStore();
 
 const chat = async () => {
