@@ -5,9 +5,9 @@ export const useChatStore = defineStore("chat", () => {
   const result = ref("");
   const load = ref(false);
 
-  function clear() {
+  const clear = () => {
     query.value = "";
-  }
+  };
 
   const chat = async () => {
     if (load.value) {
