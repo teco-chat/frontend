@@ -7,7 +7,7 @@ export const useAuthStore = defineStore(
     const name = ref("");
 
     const isInvalid = () => {
-      return !course.value && !name.value;
+      return !course.value || !name.value;
     };
 
     return { course, name, isInvalid };

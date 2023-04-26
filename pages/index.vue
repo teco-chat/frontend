@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container class="justify-center">
       <h1>안녕하세요.</h1>
       <h1>우아한테크코스 크루들을 위한 Chat-GPT 서비스입니다.</h1>
       <h5>
@@ -35,7 +35,6 @@
       <v-card v-if="chatStore.result != ''">
         <v-card-text>
           <Tiptap v-model="chatStore.result"></Tiptap>
-        
         </v-card-text>
       </v-card>
     </v-container>
@@ -44,7 +43,7 @@
 
 <script lang="ts" setup>
 import { useChatStore } from "~~/stores/chat";
-import Tiptap from '~/components/Tiptap.vue'
+import Tiptap from "~/components/Tiptap.vue";
 
 const chatStore = useChatStore();
 
