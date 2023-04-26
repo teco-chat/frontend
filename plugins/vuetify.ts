@@ -6,6 +6,16 @@ export default defineNuxtPlugin(nuxtApp => {
   const vuetify = createVuetify({
     components,
     directives,
+    theme: {
+      themes: {
+        light: {
+          dark: false,
+          colors: {
+            secondary: '#2BB6AE'
+          }
+        },
+      },
+    },
   })
 
   nuxtApp.vueApp.use(vuetify)
