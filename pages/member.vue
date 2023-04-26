@@ -39,7 +39,7 @@
           ></v-text-field>
           <br />
           <v-btn block variant="outlined" @click="login"
-            ><h2>무료로 GPT 이용하기</h2></v-btn
+            ><h2>정보 입력하고 무료로 GPT 이용하기</h2></v-btn
           >
         </v-item-group>
       </v-card>

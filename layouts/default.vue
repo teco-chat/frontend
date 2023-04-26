@@ -6,9 +6,21 @@
   </div>
   <v-layout>
     <v-app-bar flat>
-      <v-app-bar-title class="title">우아GPT</v-app-bar-title>
+      <v-app-bar-title class="dohyeon" @click="navigateTo('/')"
+        >우아GPT</v-app-bar-title
+      >
       <v-spacer></v-spacer>
       <v-btn @click="toggleTheme" :icon="themeIcon"></v-btn>
+      <v-btn variant="text" icon="mdi-account-outline">
+        <v-icon>mdi-account-outline</v-icon>
+        <v-menu activator="parent">
+          <v-list>
+            <v-list-item @click="navigateTo('/member')">
+              <v-list-item-title class="dohyeon">정보 수정</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -31,10 +43,14 @@ const toggleTheme = () => {
       ? "mdi-weather-sunny"
       : "mdi-weather-night";
 };
+
+const member = () => {
+  navigateTo("/member");
+};
 </script>
 
 <style scoped>
-.title {
+.dohyeon {
   font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
 }
 </style>
