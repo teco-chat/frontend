@@ -5,10 +5,9 @@
     </Head>
   </div>
   <v-layout>
-    <v-app-bar flat>
-      <v-app-bar-title class="dohyeon" @click="navigateTo('/')"
-        >우아GPT</v-app-bar-title
-      >
+    <v-app-bar flat class="dohyeon">
+      <v-btn @click="navigateTo('/')"><h2>우아GPT</h2></v-btn>
+      <v-btn variant="text" align="left" to="/chat">채팅 목록</v-btn>
       <v-spacer></v-spacer>
       <v-btn @click="toggleTheme" :icon="themeIcon"></v-btn>
       <v-btn variant="text" icon="mdi-account-outline">
@@ -16,7 +15,7 @@
         <v-menu activator="parent">
           <v-list>
             <v-list-item @click="navigateTo('/member')">
-              <v-list-item-title class="dohyeon">정보 수정</v-list-item-title>
+              <v-list-item-title>정보 수정</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
