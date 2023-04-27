@@ -4,7 +4,8 @@ export class Chat {
   id: number;
   title: string;
   name: string;
-  createdAt: number;
+  course: string;
+  createdAt: string;
   body: string;
   messages: Message[];
 
@@ -12,13 +13,15 @@ export class Chat {
     id: number,
     title: string,
     name: string,
-    createdAt: number,
+    course: string,
+    createdAt: string,
     body: string,
     messages: Message[]
   ) {
     this.id = id;
     this.title = title;
     this.name = name;
+    this.course = course;
     this.createdAt = createdAt;
     this.body = body;
     this.messages = messages;
