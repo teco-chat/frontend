@@ -1,4 +1,8 @@
 export const COURSE = {
+  ALL: {
+    key: "전체",
+    value: "",
+  },
   BE: {
     key: "백엔드",
     value: "BACKEND",

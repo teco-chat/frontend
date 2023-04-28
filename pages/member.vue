@@ -43,6 +43,12 @@
           >
         </v-item-group>
       </v-card>
+      <v-snackbar v-model="loginAlert" location="bottom"
+        >로그인 실패
+        <template v-slot:actions>
+          <v-btn color="error" @click="loginAlert = false"> 닫기 </v-btn>
+        </template>
+      </v-snackbar>
     </v-container>
   </div>
 </template>
@@ -51,13 +57,20 @@ import { useAuthStore } from "~~/stores/auth";
 import { COURSE } from "~~/models/member/course";
 
 const authStore = useAuthStore();
+const loginAlert = ref(false);
 
 const select = (toggle: any, selectedCourse: string) => {
   toggle();
   authStore.course = selectedCourse;
 };
 
-const login = () => {
+const login = async () => {
+  const error = await authStore.login();
+
+  if (error?.value) {
+    loginAlert.value = true;
+    return;
+  }
   navigateTo("/");
 };
 </script>

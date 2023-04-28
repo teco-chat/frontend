@@ -66,7 +66,7 @@
 <script lang="ts" setup>
 import { useItemsStore } from "~/stores/items";
 import { useSearchStore } from "~/stores/search";
-import { COURSE } from "~~/models/member/course";
+import { COURSE } from "~~/models/member/courseQuery";
 import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);

@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      gptApiToken: process.env.GPT_API_TOKEN || "",
+      baseUrl: process.env.BASE_URL || "",
     }
   }
 })

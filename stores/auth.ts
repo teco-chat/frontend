@@ -10,9 +10,28 @@ export const useAuthStore = defineStore(
       return !course.value || !name.value;
     };
 
-    return { course, name, isInvalid };
+    const login = async () => {
+      if (isInvalid()) {
+        return;
+      }
+
+      const body = {
+        name: name.value,
+        course: course.value,
+      };
+
+      const { error } = await useFetch(
+        useRuntimeConfig().public.baseUrl + "/members",
+        {
+          body: body,
+          method: "POST",
+        }
+      );
+
+      return error;
+    };
+
+    return { course, name, isInvalid, login };
   },
   { persist: true }
 );
-
-
