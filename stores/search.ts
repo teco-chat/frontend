@@ -5,9 +5,14 @@ import { useItemsStore } from "./items";
 export const useSearchStore = defineStore("search", () => {
   const courseIndex = ref(0);
   const page = ref(0);
+  const load = ref(false);
   const course = [COURSE.ALL, COURSE.BE, COURSE.FE, COURSE.AD];
 
   const searchNext = async () => {
+    if (load.value) {
+      return;
+    }
+    load.value = true;
     const param = "?course=" + course[courseIndex.value].value + "&page=" + page.value;
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/chats" + param
@@ -19,6 +24,7 @@ export const useSearchStore = defineStore("search", () => {
       itemsStore.add(chat);
     });
     page.value += 1;
+    load.value = false;
   };
 
   const clear = async () => {
