@@ -2,8 +2,13 @@
   <div>
     <v-container>
       <div class="pa-4">
-        <v-chip-group selected-class="text-secondary" column>
-          <v-chip v-for="tag in COURSE" :key="tag">
+        <v-chip-group
+          selected-class="text-secondary"
+          column
+          v-model="searchStore.courseIndex"
+          mandatory
+        >
+          <v-chip v-for="tag in COURSE" :key="tag" filter>
             {{ tag.key }}
           </v-chip>
         </v-chip-group>
@@ -59,8 +64,10 @@
 
 <script lang="ts" setup>
 import { useItemsStore } from "~/stores/items";
+import { useSearchStore } from "~/stores/search";
 import { COURSE } from "~~/models/member/course";
 import Tiptap from "~/components/Tiptap.vue";
 
 const itemsStore = useItemsStore();
+const searchStore = useSearchStore();
 </script>

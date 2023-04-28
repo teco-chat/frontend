@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
+import { COURSE } from "~/models/member/course";
 
-export const useChatStore = defineStore("chat", () => {
-  const course = ref("");
-  const name = ref("");
-  const load = ref(false);
+export const useSearchStore = defineStore("search", () => {
+  const courseIndex = ref(0);
+  const course = [COURSE.ALL, COURSE.BE, COURSE.FE, COURSE.AD];
 
-  return { }
+  return { courseIndex }
 });
