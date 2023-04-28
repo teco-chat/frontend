@@ -1,1 +1,4 @@
-export type ROLE = "ASSISTANT" | "USER";
+export const ROLE = {
+  ASSISTANT: "ASSISTANT",
+  USER: "USER"
+} as const;

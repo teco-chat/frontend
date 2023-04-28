@@ -9,6 +9,6 @@ export const useSearchStore = defineStore("search", () => {
 
   const searchNext = async () => {
     const itemsStore = useItemsStore();
-  }
-  return { courseIndex, searchNext }
+  };
+  return { courseIndex, searchNext };
 });

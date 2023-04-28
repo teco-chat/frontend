@@ -1,9 +1,13 @@
 import { defineStore } from "pinia";
+import { Message } from "~/models/chat/message";
+import { ROLE } from "~/models/chat/role";
+import { useAuthStore } from "./auth";
 
 export const useChatStore = defineStore("chat", () => {
   const query = ref("");
-  const result = ref("");
+  const result: any = ref([]);
   const load = ref(false);
+  const chatId = ref(0);
 
   const clear = () => {
     query.value = "";
@@ -14,27 +18,54 @@ export const useChatStore = defineStore("chat", () => {
       return;
     }
     load.value = true;
-    try {
-      const response: any = await $fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${useRuntimeConfig().public.gptApiToken}`,
-          },
-          body: {
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: query.value }],
-          },
-        }
+
+    addMessage(query.value, ROLE.USER);
+    
+    const url = chatId.value == 0 ? "/chats" : "/chats/" + chatId.value;
+    console.log(url);
+    const { data, error } = await useFetch(
+      useRuntimeConfig().public.baseUrl + url,
+      {
+        headers: {
+          name: useAuthStore().encodedName(),
+        },
+        body: {
+          message: query.value,
+          token: 0,
+        },
+        method: "POST",
+      }
+    );
+
+    if (error.value) {
+      load.value = false;
+      addMessage(
+        "다시 요청해주세요. 서버가 응답할 수 없습니다.",
+        ROLE.ASSISTANT
       );
-      result.value = replaceCodeFences(response.choices[0].message.content);
-      load.value = false;
-    } catch (error) {
-      result.value = "GPT 서버가 응답하지 않습니다.";
-      load.value = false;
+      return;
     }
+
+    const result: any = data.value;
+    addMessage(result["content"], ROLE.ASSISTANT);
+    chatId.value = result["chatId"];
+    load.value = false;
+  };
+
+  const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
+
+  const addMessage = (content: string, role: string) => {
+    result.value.push(
+      new Message(
+        result.value.length + 1,
+        replaceCodeFences(content),
+        role,
+        dateTimeFormat.format(Date.now())
+      )
+    );
   };
 
   const replaceCodeFences = (input: String) => {

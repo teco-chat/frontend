@@ -3,17 +3,24 @@
     <v-container class="justify-center">
       <h1>안녕하세요.</h1>
       <h1>우아한테크코스 크루들을 위한 Chat-GPT 서비스입니다.</h1>
-      <h5>
-        현재 백엔드를 구현하지 않아 무료 버전을 사용함으로 API 사용제한에 의해
-        답변이 출력되지 않을 수 있습니다.
-      </h5>
-      <h5>또한 현재 답변을 한 번에 반환하기 때문에 로딩이 느릴 수 있습니다.</h5>
       <br />
-      <v-card v-if="chatStore.result != ''">
-        <v-card-text>
-          <Tiptap v-model="chatStore.result"></Tiptap>
-        </v-card-text>
-      </v-card>
+      <div v-for="message in chatStore.result" :key="message.id">
+        <v-card align="left">
+          <v-card-item>
+            <v-card-subtitle v-if="message.role == 'USER'"
+              >{{ authStore.name }}의 질문</v-card-subtitle
+            >
+            <v-card-subtitle v-if="message.role != 'USER'"
+              >Chat-GPT의 응답</v-card-subtitle
+            >
+            <v-card-text>
+              <Tiptap v-model="message.content"></Tiptap
+            ></v-card-text>
+          </v-card-item>
+          <v-divider></v-divider>
+        </v-card>
+        <br />
+      </div>
       <v-app-bar height="100" flat location="bottom">
         <v-container class="justify-center">
           <v-text-field
@@ -47,11 +54,13 @@
 <script lang="ts" setup>
 import { useChatStore } from "~~/stores/chat";
 import Tiptap from "~/components/Tiptap.vue";
+import { useAuthStore } from "~/stores/auth";
 
 const chatStore = useChatStore();
+const authStore = useAuthStore();
 
 const chat = async () => {
-  chatStore.chat();
+  await chatStore.chat();
 };
 </script>
 
