@@ -9,43 +9,37 @@
       </h5>
       <h5>또한 현재 답변을 한 번에 반환하기 때문에 로딩이 느릴 수 있습니다.</h5>
       <br />
-      
-      <v-app-bar
-        height="100"
-        flat
-        location="bottom"
-      >
-      <v-container class="justify-center">
-      <v-text-field
-        v-model="chatStore.query"
-        density="compact"
-        variant="solo"
-        label="질문을 입력해주세요."
-        append-inner-icon="mdi-arrow-right"
-        single-line
-        clearable
-        clear-icon="mdi-close-circle"
-        hide-details
-        @click:append-inner="chat"
-        @click:clear="chatStore.clear"
-        @keypress.enter="chat"
-        ><template v-slot:loader>
-          <v-progress-linear
-            :active="chatStore.load"
-            :model-value="progress"
-            absolute
-            height="4"
-            indeterminate
-          ></v-progress-linear> </template
-      ></v-text-field>
-      </v-container>  
-      </v-app-bar>
-      <br />
       <v-card v-if="chatStore.result != ''">
         <v-card-text>
           <Tiptap v-model="chatStore.result"></Tiptap>
         </v-card-text>
       </v-card>
+      <v-app-bar height="100" flat location="bottom">
+        <v-container class="justify-center">
+          <v-text-field
+            v-model="chatStore.query"
+            density="compact"
+            variant="solo"
+            label="질문을 입력해주세요."
+            append-inner-icon="mdi-arrow-right"
+            single-line
+            clearable
+            clear-icon="mdi-close-circle"
+            hide-details
+            @click:append-inner="chat"
+            @click:clear="chatStore.clear"
+            @keypress.enter="chat"
+            ><template v-slot:loader>
+              <v-progress-linear
+                :active="chatStore.load"
+                :model-value="progress"
+                absolute
+                height="4"
+                indeterminate
+              ></v-progress-linear> </template
+          ></v-text-field>
+        </v-container>
+      </v-app-bar>
     </v-container>
   </div>
 </template>
