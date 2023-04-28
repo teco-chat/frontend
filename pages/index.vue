@@ -9,6 +9,13 @@
       </h5>
       <h5>또한 현재 답변을 한 번에 반환하기 때문에 로딩이 느릴 수 있습니다.</h5>
       <br />
+      
+      <v-app-bar
+        height="100"
+        flat
+        location="bottom"
+      >
+      <v-container class="justify-center">
       <v-text-field
         v-model="chatStore.query"
         density="compact"
@@ -31,6 +38,8 @@
             indeterminate
           ></v-progress-linear> </template
       ></v-text-field>
+      </v-container>  
+      </v-app-bar>
       <br />
       <v-card v-if="chatStore.result != ''">
         <v-card-text>
