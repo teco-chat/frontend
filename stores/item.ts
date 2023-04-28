@@ -15,7 +15,8 @@ export const useItemStore = defineStore("item", () => {
     }
     load.value = true;
     const { data, error } = await useFetch(
-      useRuntimeConfig().public.baseUrl + "/chats/" + id, {
+      useRuntimeConfig().public.baseUrl + "/chats/" + id,
+      {
         method: "GET",
       }
     );
@@ -23,7 +24,9 @@ export const useItemStore = defineStore("item", () => {
     const result: any = data;
     item.value = result.value;
     for (let i = 0; i < item.value.messages.length; i++) {
-      item.value.messages[i].content = replaceCodeFences(item.value.messages[i].content);
+      item.value.messages[i].content = replaceCodeFences(
+        item.value.messages[i].content
+      );
     }
     load.value = false;
   };

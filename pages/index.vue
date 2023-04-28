@@ -29,12 +29,7 @@
         @click="clearAll"
         >새로운 채팅 시작하기</v-btn
       >
-      <v-app-bar
-        height="100"
-        flat
-        location="bottom"
-        color="background"
-      >
+      <v-app-bar height="100" flat location="bottom" color="background">
         <v-container class="justify-center">
           <v-text-field
             v-model="chatStore.query"
@@ -78,7 +73,7 @@ const chat = async () => {
 
 const clearAll = () => {
   chatStore.clearAll();
-}
+};
 </script>
 
 <style scoped>

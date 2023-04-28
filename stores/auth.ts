@@ -13,8 +13,8 @@ export const useAuthStore = defineStore(
     const encodedName = () => {
       const uriComponent = unescape(encodeURIComponent(name.value));
       return btoa(uriComponent);
-    }
-    
+    };
+
     const login = async () => {
       if (isInvalid()) {
         return;

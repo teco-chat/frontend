@@ -9,7 +9,7 @@ export const useItemsStore = defineStore("items", () => {
 
   const clear = () => {
     items.value = [];
-  }
+  };
 
   const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
     dateStyle: "short",
