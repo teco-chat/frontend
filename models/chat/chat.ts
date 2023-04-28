@@ -1,29 +1,24 @@
-import { Message } from "./message";
-
 export class Chat {
   id: number;
-  title: string;
-  name: string;
+  crewId: number;
+  crewName: string;
   course: string;
+  title: string;
   createdAt: string;
-  body: string;
-  messages: Message[];
 
   constructor(
     id: number,
-    title: string,
-    name: string,
+    crewId: number,
+    crewName: string,
     course: string,
-    createdAt: string,
-    body: string,
-    messages: Message[]
+    title: string,
+    createdAt: string
   ) {
     this.id = id;
-    this.title = title;
-    this.name = name;
+    this.crewId = crewId;
+    this.crewName = crewName;
     this.course = course;
+    this.title = title;
     this.createdAt = createdAt;
-    this.body = body;
-    this.messages = messages;
   }
 }

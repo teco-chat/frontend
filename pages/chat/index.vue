@@ -8,7 +8,12 @@
           v-model="searchStore.courseIndex"
           mandatory
         >
-          <v-chip v-for="tag in COURSE" :key="tag" filter>
+          <v-chip
+            v-for="tag in COURSE"
+            :key="tag"
+            filter
+            @click="clearAndSearch"
+          >
             {{ tag.key }}
           </v-chip>
         </v-chip-group>
@@ -26,11 +31,8 @@
           <v-card :to="'/chat/' + chat.id" align="left">
             <v-card-item>
               <v-card-title>{{ chat.title }}</v-card-title>
-              <v-card-subtitle>{{ chat.createdAt }}</v-card-subtitle>
+              <v-card-subtitle>{{ parse(chat.createdAt) }}</v-card-subtitle>
             </v-card-item>
-            <v-card-text overflow-hidden class="text-medium-emphasis">
-              {{ chat.body }}
-            </v-card-text>
             <v-divider></v-divider>
             <div class="d-flex mr-4 align-center">
               <v-chip
@@ -39,19 +41,25 @@
                 text-color="white"
                 prepend-icon="mdi-account-circle"
               >
-                {{ chat.name }}
+                {{ chat.crewName }}
               </v-chip>
               <v-chip
                 class="ma-2"
                 :class="{
-                  'text-info': chat.course == '프론트엔드',
-                  'text-success': chat.course == '백엔드',
-                  'text-primary': chat.course == '안드로이드',
+                  'text-info': chat.course == 'FRONTEND',
+                  'text-success': chat.course == 'BACKEND',
+                  'text-primary': chat.course == 'ANDROID',
                 }"
                 text-color="white"
                 prepend-icon="mdi-crosshairs"
               >
-                {{ chat.course }}
+                {{
+                  chat.course == "BACKEND"
+                    ? "백엔드"
+                    : chat.course == "FRONTEND"
+                    ? "프론트엔드"
+                    : "안드로이드"
+                }}
               </v-chip>
               <v-spacer></v-spacer>
             </div>
@@ -72,6 +80,18 @@ import Tiptap from "~/components/Tiptap.vue";
 const isIntersect = ref(false);
 const itemsStore = useItemsStore();
 const searchStore = useSearchStore();
+await searchStore.clear();
+await searchStore.searchNext();
+
+const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
+  dateStyle: "short",
+  timeStyle: "short",
+});
+
+const parse = (time: any) => {
+  const date = new Date(time);
+  return dateTimeFormat.format(date);
+};
 
 const searchNext = async () => {
   if (isIntersect.value) {
@@ -80,5 +100,10 @@ const searchNext = async () => {
   isIntersect.value = true;
   await searchStore.searchNext();
   isIntersect.value = false;
+};
+
+const clearAndSearch = async () => {
+  await searchStore.clear();
+  await searchStore.searchNext();
 };
 </script>

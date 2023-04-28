@@ -30,7 +30,6 @@ export const useChatStore = defineStore("chat", () => {
     addMessage(query.value, ROLE.USER);
 
     const url = chatId.value == 0 ? "/chats" : "/chats/" + chatId.value;
-    console.log(url);
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + url,
       {
