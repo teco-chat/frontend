@@ -11,6 +11,14 @@ export const useChatStore = defineStore("chat", () => {
 
   const clear = () => {
     query.value = "";
+    load.value = false;
+  };
+
+  const clearAll = () => {
+    query.value = "";
+    load.value = false;
+    result.value = [];
+    chatId.value = 0;
   };
 
   const chat = async () => {
@@ -20,7 +28,7 @@ export const useChatStore = defineStore("chat", () => {
     load.value = true;
 
     addMessage(query.value, ROLE.USER);
-    
+
     const url = chatId.value == 0 ? "/chats" : "/chats/" + chatId.value;
     console.log(url);
     const { data, error } = await useFetch(
@@ -78,5 +86,5 @@ export const useChatStore = defineStore("chat", () => {
       .replace(/\n/g, "<br>");
   };
 
-  return { query, result, load, chat, clear };
+  return { query, result, load, chat, clear, clearAll };
 });

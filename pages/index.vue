@@ -21,7 +21,20 @@
         </v-card>
         <br />
       </div>
-      <v-app-bar height="100" flat location="bottom">
+      <v-btn
+        v-if="chatStore.result.length >= 2"
+        block
+        rounded="xl"
+        size="x-large"
+        @click="clearAll"
+        >새로운 채팅 시작하기</v-btn
+      >
+      <v-app-bar
+        height="100"
+        flat
+        location="bottom"
+        color="background"
+      >
         <v-container class="justify-center">
           <v-text-field
             v-model="chatStore.query"
@@ -62,6 +75,10 @@ const authStore = useAuthStore();
 const chat = async () => {
   await chatStore.chat();
 };
+
+const clearAll = () => {
+  chatStore.clearAll();
+}
 </script>
 
 <style scoped>
