@@ -58,6 +58,7 @@
           </v-card>
         </v-col>
       </v-row>
+      <v-card v-intersect="searchNext"></v-card>
     </v-container>
   </div>
 </template>
@@ -68,6 +69,16 @@ import { useSearchStore } from "~/stores/search";
 import { COURSE } from "~~/models/member/course";
 import Tiptap from "~/components/Tiptap.vue";
 
+const isIntersect = ref(false);
 const itemsStore = useItemsStore();
 const searchStore = useSearchStore();
+
+const searchNext = async () => {
+  if (isIntersect.value) {
+    return;
+  }
+  isIntersect.value = true;
+  await searchStore.searchNext();
+  isIntersect.value = false;
+};
 </script>

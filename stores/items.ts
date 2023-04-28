@@ -5,6 +5,16 @@ import { Message } from "~/models/chat/message";
 export const useItemsStore = defineStore("items", () => {
   const items: any = ref([]);
 
+  const add = (items: any) => {
+    for (let item in items) {
+      items.push(item);
+    }
+  };
+
+  const clear = () => {
+    items.clear();
+  }
+
   const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
     dateStyle: "short",
     timeStyle: "short",
@@ -42,5 +52,5 @@ export const useItemsStore = defineStore("items", () => {
     );
   }
 
-  return { items };
+  return { items, add, clear };
 });
