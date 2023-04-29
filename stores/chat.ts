@@ -43,6 +43,7 @@ export const useChatStore = defineStore("chat", () => {
         method: "POST",
       }
     );
+    query.value = "";
 
     if (error.value) {
       load.value = false;
