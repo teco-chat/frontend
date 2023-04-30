@@ -11,10 +11,5 @@ export const useItemsStore = defineStore("items", () => {
     items.value = [];
   };
 
-  const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
-    dateStyle: "short",
-    timeStyle: "short",
-  });
-
   return { items, add, clear };
 });
