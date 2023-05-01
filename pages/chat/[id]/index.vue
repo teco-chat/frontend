@@ -4,7 +4,9 @@
       <v-card align="left" max-width="640px">
         <v-card-item>
           <v-card-title>{{ itemStore.item.title }}</v-card-title>
-          <v-card-subtitle>{{ parse(itemStore.item.createdAt) }}</v-card-subtitle>
+          <v-card-subtitle>{{
+            parse(itemStore.item.createdAt)
+          }}</v-card-subtitle>
           <v-chip
             class="ma-2"
             color="secondary"
@@ -14,22 +16,31 @@
             {{ itemStore.item.crewName }}
           </v-chip>
           <v-chip
+            v-if="itemStore.item.course == 'BACKEND'"
             class="ma-2"
-            :class="{
-              'text-info': itemStore.item.course == 'FRONTEND',
-              'text-success': itemStore.item.course == 'BACKEND',
-              'text-primary': itemStore.item.course == 'ANDROID',
-            }"
+            color="success"
             text-color="white"
-            prepend-icon="mdi-crosshairs"
+            prepend-icon="mdi-language-java"
           >
-            {{
-              itemStore.item.course == "BACKEND"
-                ? "백엔드"
-                : itemStore.item.course == "FRONTEND"
-                ? "프론트엔드"
-                : "안드로이드"
-            }}
+            백엔드
+          </v-chip>
+          <v-chip
+            v-if="itemStore.item.course == 'FRONTEND'"
+            class="ma-2"
+            color="info"
+            text-color="white"
+            prepend-icon="mdi-language-typescript"
+          >
+            프론트엔드
+          </v-chip>
+          <v-chip
+            v-if="itemStore.item.course == 'ANDROID'"
+            class="ma-2"
+            color="primary"
+            text-color="white"
+            prepend-icon="mdi-language-kotlin"
+          >
+            안드로이드
           </v-chip>
         </v-card-item>
       </v-card>
