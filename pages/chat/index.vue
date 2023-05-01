@@ -44,22 +44,31 @@
                 {{ chat.crewName }}
               </v-chip>
               <v-chip
+                v-if="chat.course == 'BACKEND'"
                 class="ma-2"
-                :class="{
-                  'text-info': chat.course == 'FRONTEND',
-                  'text-success': chat.course == 'BACKEND',
-                  'text-primary': chat.course == 'ANDROID',
-                }"
+                color="success"
                 text-color="white"
-                prepend-icon="mdi-crosshairs"
+                prepend-icon="mdi-language-java"
               >
-                {{
-                  chat.course == "BACKEND"
-                    ? "백엔드"
-                    : chat.course == "FRONTEND"
-                    ? "프론트엔드"
-                    : "안드로이드"
-                }}
+                백엔드
+              </v-chip>
+              <v-chip
+                v-if="chat.course == 'FRONTEND'"
+                class="ma-2"
+                color="info"
+                text-color="white"
+                prepend-icon="mdi-language-typescript"
+              >
+                프론트엔드
+              </v-chip>
+              <v-chip
+                v-if="chat.course == 'ANDROID'"
+                class="ma-2"
+                color="primary"
+                text-color="white"
+                prepend-icon="mdi-language-kotlin"
+              >
+                안드로이드
               </v-chip>
               <v-spacer></v-spacer>
             </div>
