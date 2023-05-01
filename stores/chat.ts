@@ -22,7 +22,7 @@ export const useChatStore = defineStore("chat", () => {
   };
 
   const chat = async () => {
-    if (load.value) {
+    if (load.value || query.value == "") {
       return;
     }
     load.value = true;
