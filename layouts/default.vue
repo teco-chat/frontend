@@ -1,12 +1,12 @@
 <template>
   <div>
     <Head>
-      <Title>우아GPT</Title>
+      <Title>테코GPT</Title>
     </Head>
   </div>
   <v-layout>
     <v-app-bar flat class="dohyeon">
-      <v-btn @click="navigateTo('/')"><h2>우아GPT</h2></v-btn>
+      <v-btn @click="navigateTo('/')"><h2>테코GPT</h2></v-btn>
       <v-btn variant="text" align="left" to="/chat">채팅 목록</v-btn>
       <v-spacer></v-spacer>
       <v-btn @click="toggleTheme" :icon="themeIcon"></v-btn>
