@@ -1,3 +1,3 @@
-### 우아GPT
+### 테코GPT
 
-https://woowa.chat
+https://teco.chat
