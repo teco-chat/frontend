@@ -117,6 +117,10 @@ const start = async (id: any) => {
   await chatStore.startWith(id);
   chatsStore.clearAll();
   await chatsStore.searchNext();
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth",
+  });
 };
 </script>
 
