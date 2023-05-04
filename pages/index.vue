@@ -21,14 +21,16 @@
         </v-card>
         <br />
       </div>
-      <v-btn
-        v-if="chatStore.result.length >= 2"
-        block
-        rounded="xl"
-        size="x-large"
-        @click="clearAll"
-        >새로운 채팅 시작하기</v-btn
-      >
+      <v-navigation-drawer expand-on-hover rail>
+        <v-list>
+          <v-list-item
+            prepend-icon="mdi-plus"
+            title="새로운 채팅 시작하기"
+            @click="clearAll"
+          ></v-list-item>
+        </v-list>
+        <v-divider></v-divider>
+      </v-navigation-drawer>
       <v-app-bar height="100" flat location="bottom" color="background">
         <v-container class="justify-center">
           <v-text-field
