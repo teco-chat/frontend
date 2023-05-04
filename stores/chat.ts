@@ -1,11 +1,9 @@
 import { defineStore } from "pinia";
-import { Message } from "~/models/chat/message";
-import { ROLE } from "~/models/chat/role";
 import { useAuthStore } from "./auth";
 
 export const useChatStore = defineStore("chat", () => {
   const query = ref("");
-  const result: any = ref([]);
+  const item: any = ref({ messages: [] });
   const load = ref(false);
   const chatId = ref(0);
 
@@ -17,8 +15,31 @@ export const useChatStore = defineStore("chat", () => {
   const clearAll = () => {
     query.value = "";
     load.value = false;
-    result.value = [];
+    item.value = { messages: [] };
     chatId.value = 0;
+  };
+
+  const startWith = async (id: any) => {
+    if (load.value) {
+      return;
+    }
+    load.value = true;
+    const { data, error } = await useFetch(
+      useRuntimeConfig().public.baseUrl + "/chats/" + id,
+      {
+        method: "GET",
+      }
+    );
+
+    const result: any = data;
+    item.value = result.value;
+    for (let i = 0; i < item.value.messages.length; i++) {
+      item.value.messages[i].content = replaceCodeFences(
+        item.value.messages[i].content
+      );
+    }
+    chatId.value = id;
+    load.value = false;
   };
 
   const chat = async () => {
@@ -27,7 +48,7 @@ export const useChatStore = defineStore("chat", () => {
     }
     load.value = true;
 
-    addMessage(query.value, ROLE.USER);
+    addMessage(query.value, "user");
 
     const url = chatId.value == 0 ? "/chats" : "/chats/" + chatId.value;
     const { data, error } = await useFetch(
@@ -47,15 +68,12 @@ export const useChatStore = defineStore("chat", () => {
 
     if (error.value) {
       load.value = false;
-      addMessage(
-        "다시 요청해주세요. 서버가 응답할 수 없습니다.",
-        ROLE.ASSISTANT
-      );
+      addMessage("다시 요청해주세요. 서버가 응답할 수 없습니다.", "assistant");
       return;
     }
 
     const result: any = data.value;
-    addMessage(result["content"], ROLE.ASSISTANT);
+    addMessage(result["content"], "assistant");
     chatId.value = result["chatId"];
     load.value = false;
   };
@@ -66,14 +84,11 @@ export const useChatStore = defineStore("chat", () => {
   });
 
   const addMessage = (content: string, role: string) => {
-    result.value.push(
-      new Message(
-        result.value.length + 1,
-        replaceCodeFences(content),
-        role,
-        dateTimeFormat.format(Date.now())
-      )
-    );
+    item.value.messages.push({
+      content: replaceCodeFences(content),
+      role: role,
+      createdAt: dateTimeFormat.format(Date.now()),
+    });
   };
 
   const replaceCodeFences = (input: String) => {
@@ -88,5 +103,5 @@ export const useChatStore = defineStore("chat", () => {
       .replace(/\n/g, "<br>");
   };
 
-  return { query, result, load, chat, clear, clearAll };
+  return { query, item, load, chat, clear, clearAll, startWith };
 });

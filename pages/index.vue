@@ -4,13 +4,13 @@
       <h1>안녕하세요.</h1>
       <h1>우아한테크코스 크루들을 위한 Chat-GPT 서비스입니다.</h1>
       <br />
-      <div v-for="message in chatStore.result" :key="message.id">
+      <div v-for="message in chatStore.item.messages" :key="message.id">
         <v-card align="left">
           <v-card-item>
-            <v-card-subtitle v-if="message.role == 'USER'"
+            <v-card-subtitle v-if="message.role == 'user'"
               >{{ authStore.name }}의 질문</v-card-subtitle
             >
-            <v-card-subtitle v-if="message.role != 'USER'"
+            <v-card-subtitle v-if="message.role != 'user'"
               >Chat-GPT의 응답</v-card-subtitle
             >
             <v-card-text>
@@ -21,15 +21,26 @@
         </v-card>
         <br />
       </div>
-      <v-navigation-drawer expand-on-hover rail>
+      <v-navigation-drawer expand-on-hover rail permanent>
         <v-list>
           <v-list-item
             prepend-icon="mdi-plus"
             title="새로운 채팅 시작하기"
             @click="clearAll"
           ></v-list-item>
+          <v-divider></v-divider>
+          <div v-for="item in chatsStore.items" :key="item.id">
+            <v-list-item
+              prepend-icon="mdi-message-outline"
+              :title="item.title"
+              :subtitle="parse(item.createdAt)"
+              @click="start(item.id)"
+            >
+            </v-list-item>
+          </div>
         </v-list>
         <v-divider></v-divider>
+        <v-card v-intersect="searchNext"></v-card>
       </v-navigation-drawer>
       <v-app-bar height="100" flat location="bottom" color="background">
         <v-container class="justify-center">
@@ -63,18 +74,49 @@
 
 <script lang="ts" setup>
 import { useChatStore } from "~~/stores/chat";
+import { useChatsStore } from "~~/stores/chats";
 import Tiptap from "~/components/Tiptap.vue";
 import { useAuthStore } from "~/stores/auth";
 
+const isIntersect = ref(false);
 const chatStore = useChatStore();
 const authStore = useAuthStore();
+const chatsStore = useChatsStore();
 
 const chat = async () => {
   await chatStore.chat();
 };
 
-const clearAll = () => {
+const clearAll = async () => {
   chatStore.clearAll();
+  chatsStore.clearAll();
+  await chatsStore.searchNext();
+};
+
+const searchNext = async () => {
+  if (isIntersect.value) {
+    return;
+  }
+  isIntersect.value = true;
+  await chatsStore.searchNext();
+  isIntersect.value = false;
+};
+
+const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
+  dateStyle: "short",
+  timeStyle: "short",
+});
+
+const parse = (time: any) => {
+  const date = new Date(time);
+  return dateTimeFormat.format(date);
+};
+
+const start = async (id: any) => {
+  chatStore.clearAll();
+  await chatStore.startWith(id);
+  chatsStore.clearAll();
+  await chatsStore.searchNext();
 };
 </script>
 
