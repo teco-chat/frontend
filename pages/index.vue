@@ -38,9 +38,14 @@
             >
             </v-list-item>
           </div>
+          <v-list-item
+            prepend-icon="mdi-chevron-down"
+            title="추가로 불러오기"
+            @click="searchNext"
+          >
+          </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <v-card v-intersect="searchNext"></v-card>
       </v-navigation-drawer>
       <v-app-bar height="100" flat location="bottom" color="background">
         <v-container class="justify-center">
@@ -78,7 +83,6 @@ import { useChatsStore } from "~~/stores/chats";
 import Tiptap from "~/components/Tiptap.vue";
 import { useAuthStore } from "~/stores/auth";
 
-const isIntersect = ref(false);
 const chatStore = useChatStore();
 const authStore = useAuthStore();
 const chatsStore = useChatsStore();
@@ -93,13 +97,10 @@ const clearAll = async () => {
   await chatsStore.searchNext();
 };
 
+clearAll();
+
 const searchNext = async () => {
-  if (isIntersect.value) {
-    return;
-  }
-  isIntersect.value = true;
   await chatsStore.searchNext();
-  isIntersect.value = false;
 };
 
 const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
