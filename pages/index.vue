@@ -87,7 +87,16 @@ const authStore = useAuthStore();
 const chatsStore = useChatsStore();
 
 const chat = async () => {
-  await chatStore.chat();
+  await chatStore.question();
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth",
+  });
+  await chatStore.answer();
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth",
+  });
 };
 
 const clearAll = async () => {

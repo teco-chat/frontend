@@ -42,13 +42,20 @@ export const useChatStore = defineStore("chat", () => {
     load.value = false;
   };
 
-  const chat = async () => {
+  const question = async () => {
     if (load.value || query.value == "") {
       return;
     }
     load.value = true;
-
     addMessage(query.value, "user");
+    load.value = false;
+  }
+
+  const answer = async () => {
+    if (load.value || query.value == "") {
+      return;
+    }
+    load.value = true;
 
     const url = chatId.value == 0 ? "/chats" : "/chats/" + chatId.value;
     const { data, error } = await useFetch(
@@ -103,5 +110,5 @@ export const useChatStore = defineStore("chat", () => {
       .replace(/\n/g, "<br>");
   };
 
-  return { query, item, load, chat, clear, clearAll, startWith };
+  return { query, item, load, question, answer, clear, clearAll, startWith };
 });
