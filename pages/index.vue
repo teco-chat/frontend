@@ -47,21 +47,20 @@
         </v-list>
         <v-divider></v-divider>
       </v-navigation-drawer>
-      <v-app-bar height="100" flat location="bottom" color="background">
+      <v-app-bar height="200" flat location="bottom" color="background">
         <v-container class="justify-center">
-          <v-text-field
+          <v-textarea
             v-model="chatStore.query"
-            density="compact"
             variant="solo"
             label="질문을 입력해주세요."
             append-inner-icon="mdi-arrow-right"
-            single-line
             clearable
             clear-icon="mdi-close-circle"
             hide-details
             @click:append-inner="chat"
             @click:clear="chatStore.clear"
-            @keypress.enter="chat"
+            @keydown.enter.exact.prevent="chat"
+            @keydown.enter.shift.exact.prevent="chatStore.query += '\n'"
             ><template v-slot:loader>
               <v-progress-linear
                 :active="chatStore.load"
@@ -70,7 +69,7 @@
                 height="4"
                 indeterminate
               ></v-progress-linear> </template
-          ></v-text-field>
+          ></v-textarea>
         </v-container>
       </v-app-bar>
     </v-container>
