@@ -20,7 +20,7 @@ export const useChatStore = defineStore("chat", () => {
     chatId.value = 0;
   };
 
-  const startWith = async (id: any) => {
+  const startNewChatWithId = async (id: any) => {
     if (load.value) {
       return;
     }
@@ -92,5 +92,5 @@ export const useChatStore = defineStore("chat", () => {
     });
   };
 
-  return { query, item, load, question, answer, clear, clearAll, startWith };
+  return { query, item, question, answer, clear, clearAll, startNewChatWithId };
 });
