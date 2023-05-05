@@ -11,7 +11,7 @@
               >{{ authStore.name }}의 질문</v-card-subtitle
             >
             <v-card-subtitle v-if="message.role != 'user'"
-              >Chat-GPT의 응답</v-card-subtitle
+              >Chat-GPT의 답변</v-card-subtitle
             >
             <v-card-text>
               <Tiptap v-model="message.content"></Tiptap

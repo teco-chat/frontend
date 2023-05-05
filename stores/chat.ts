@@ -71,14 +71,13 @@ export const useChatStore = defineStore("chat", () => {
         method: "POST",
       }
     );
-    query.value = "";
-
+    
     if (error.value) {
       load.value = false;
       addMessage("다시 요청해주세요. 서버가 응답할 수 없습니다.", "assistant");
       return;
     }
-
+    query.value = "";
     const result: any = data.value;
     addMessage(result["content"], "assistant");
     chatId.value = result["chatId"];
