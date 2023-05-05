@@ -5,7 +5,7 @@ export const useItemStore = defineStore("item", () => {
   const item = ref();
   const load = ref(false);
 
-  const getItem = async (id: string) => {
+  const searchById = async (id: string) => {
     if (load.value) {
       return;
     }
@@ -27,5 +27,5 @@ export const useItemStore = defineStore("item", () => {
     load.value = false;
   };
 
-  return { item, getItem };
+  return { item, searchById };
 });

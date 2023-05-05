@@ -71,7 +71,7 @@ import Tiptap from "~/components/Tiptap.vue";
 import { parseDateTimeFormat } from "~~/utils/date"
 
 const itemStore = useItemStore();
-await itemStore.getItem(useRoute().params.id.toString());
+await itemStore.searchById(useRoute().params.id.toString());
 </script>
 
 <style></style>
