@@ -92,5 +92,5 @@ export const useChatStore = defineStore("chat", () => {
     });
   };
 
-  return { query, item, question, answer, clear, clearAll, startNewChatWithId };
+  return { query, load, item, question, answer, clear, clearAll, startNewChatWithId };
 });
