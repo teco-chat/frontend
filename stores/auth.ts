@@ -6,7 +6,7 @@ export const useAuthStore = defineStore(
     const course = ref("");
     const name = ref("");
 
-    const isInvalid = () => {
+    const isInvalidCredential = () => {
       return !course.value || !name.value;
     };
 
@@ -16,7 +16,7 @@ export const useAuthStore = defineStore(
     };
 
     const login = async () => {
-      if (isInvalid()) {
+      if (isInvalidCredential()) {
         return;
       }
 
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore(
       return error;
     };
 
-    return { course, name, isInvalid, login, encodedName };
+    return { course, name, isInvalidCredential, login, encodedName };
   },
   { persist: true }
 );
