@@ -83,7 +83,7 @@
 <script lang="ts" setup>
 import { useItemsStore } from "~/stores/items";
 import { useSearchStore } from "~/stores/search";
-import { COURSE } from "~~/models/member/courseQuery";
+import { COURSE } from "~/models/member/courseWithAll";
 import { parseDateTimeFormat } from "~~/utils/date"
 import Tiptap from "~/components/Tiptap.vue";
 

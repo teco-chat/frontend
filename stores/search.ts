@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { COURSE } from "~/models/member/courseQuery";
+import { COURSE } from "~/models/member/courseWithAll";
 import { useItemsStore } from "./items";
 
 export const useSearchStore = defineStore("search", () => {
