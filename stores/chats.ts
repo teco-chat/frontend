@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
-import { useChatStore } from "./chat";
 
 export const useChatsStore = defineStore("chats", () => {
   const items: any = ref([]);
@@ -25,10 +24,6 @@ export const useChatsStore = defineStore("chats", () => {
     page.value += 1;
     load.value = false;
   };
-
-  const addChat = async () => {
-    items.value.unshift(useChatStore().item);
-  }
 
   const clearAll = async () => {
     items.value = [];

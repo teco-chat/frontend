@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
+import { replaceCodeFences } from "~~/utils/code";
 
 export const useItemStore = defineStore("item", () => {
   const item = ref();
   const load = ref(false);
 
-  const getItem = async (id: string) => {
+  const searchById = async (id: string) => {
     if (load.value) {
       return;
     }
@@ -26,18 +27,5 @@ export const useItemStore = defineStore("item", () => {
     load.value = false;
   };
 
-  const replaceCodeFences = (input: String) => {
-    const codeFencesRegex = /```([\w-]*)\n([\s\S]*?)\n```/g;
-    return input
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(codeFencesRegex, (match, p1, p2) => {
-        const languageClass = p1 ? ` class="language-${p1}"` : "";
-        return `<pre><code${languageClass}>${p2}</code></pre>`;
-      })
-      .replace(/\n/g, "<br>");
-  };
-  
-
-  return { item, getItem };
+  return { item, searchById };
 });

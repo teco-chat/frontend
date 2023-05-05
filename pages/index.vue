@@ -33,7 +33,7 @@
             <v-list-item
               prepend-icon="mdi-message-outline"
               :title="item.title"
-              :subtitle="parse(item.createdAt)"
+              :subtitle="parseDateTimeFormat(item.createdAt)"
               @click="start(item.id)"
             >
             </v-list-item>
@@ -81,6 +81,8 @@ import { useChatStore } from "~~/stores/chat";
 import { useChatsStore } from "~~/stores/chats";
 import Tiptap from "~/components/Tiptap.vue";
 import { useAuthStore } from "~/stores/auth";
+import { parseDateTimeFormat } from "~~/utils/date";
+import { scrollToBottom } from "~~/utils/window";
 
 const chatStore = useChatStore();
 const authStore = useAuthStore();
@@ -88,15 +90,17 @@ const chatsStore = useChatsStore();
 
 const chat = async () => {
   await chatStore.question();
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
+  scrollToBottom();
   await chatStore.answer();
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
+  scrollToBottom();
+};
+
+const start = async (id: any) => {
+  chatStore.clearAll();
+  await chatStore.startNewChatWithId(id);
+  chatsStore.clearAll();
+  await chatsStore.searchNext();
+  scrollToBottom();
 };
 
 const clearAll = async () => {
@@ -105,32 +109,11 @@ const clearAll = async () => {
   await chatsStore.searchNext();
 };
 
-clearAll();
-
 const searchNext = async () => {
   await chatsStore.searchNext();
 };
 
-const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
-  dateStyle: "short",
-  timeStyle: "short",
-});
-
-const parse = (time: any) => {
-  const date = new Date(time);
-  return dateTimeFormat.format(date);
-};
-
-const start = async (id: any) => {
-  chatStore.clearAll();
-  await chatStore.startWith(id);
-  chatsStore.clearAll();
-  await chatsStore.searchNext();
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
-};
+clearAll();
 </script>
 
 <style scoped>
