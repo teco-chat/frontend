@@ -90,8 +90,6 @@ import Tiptap from "~/components/Tiptap.vue";
 const isIntersect = ref(false);
 const itemsStore = useItemsStore();
 const searchStore = useSearchStore();
-await searchStore.clear();
-await searchStore.searchNext();
 
 const searchNext = async () => {
   if (isIntersect.value) {
@@ -106,4 +104,6 @@ const clearAndSearch = async () => {
   await searchStore.clear();
   await searchStore.searchNext();
 };
+
+clearAndSearch();
 </script>
