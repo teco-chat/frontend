@@ -82,6 +82,7 @@ import { useChatsStore } from "~~/stores/chats";
 import Tiptap from "~/components/Tiptap.vue";
 import { useAuthStore } from "~/stores/auth";
 import { parseDateTimeFormat } from "~~/utils/date";
+import { scrollToBottom } from "~~/utils/window";
 
 const chatStore = useChatStore();
 const authStore = useAuthStore();
@@ -89,15 +90,17 @@ const chatsStore = useChatsStore();
 
 const chat = async () => {
   await chatStore.question();
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
+  scrollToBottom();
   await chatStore.answer();
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
+  scrollToBottom();
+};
+
+const start = async (id: any) => {
+  chatStore.clearAll();
+  await chatStore.startWith(id);
+  chatsStore.clearAll();
+  await chatsStore.searchNext();
+  scrollToBottom();
 };
 
 const clearAll = async () => {
@@ -106,22 +109,11 @@ const clearAll = async () => {
   await chatsStore.searchNext();
 };
 
-clearAll();
-
 const searchNext = async () => {
   await chatsStore.searchNext();
 };
 
-const start = async (id: any) => {
-  chatStore.clearAll();
-  await chatStore.startWith(id);
-  chatsStore.clearAll();
-  await chatsStore.searchNext();
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
-};
+clearAll();
 </script>
 
 <style scoped>
