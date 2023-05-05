@@ -28,7 +28,7 @@ export const useChatsStore = defineStore("chats", () => {
 
   const addChat = async () => {
     items.value.unshift(useChatStore().item);
-  }
+  };
 
   const clearAll = async () => {
     items.value = [];

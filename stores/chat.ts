@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { replaceCodeFences } from "~~/utils/code";
 import { useAuthStore } from "./auth";
 
 export const useChatStore = defineStore("chat", () => {
@@ -49,7 +50,7 @@ export const useChatStore = defineStore("chat", () => {
     load.value = true;
     addMessage(query.value, "user");
     load.value = false;
-  }
+  };
 
   const answer = async () => {
     if (load.value || query.value == "") {
@@ -71,7 +72,7 @@ export const useChatStore = defineStore("chat", () => {
         method: "POST",
       }
     );
-    
+
     if (error.value) {
       load.value = false;
       addMessage("다시 요청해주세요. 서버가 응답할 수 없습니다.", "assistant");
@@ -84,29 +85,11 @@ export const useChatStore = defineStore("chat", () => {
     load.value = false;
   };
 
-  const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
-    dateStyle: "short",
-    timeStyle: "short",
-  });
-
   const addMessage = (content: string, role: string) => {
     item.value.messages.push({
       content: replaceCodeFences(content),
-      role: role,
-      createdAt: dateTimeFormat.format(Date.now()),
+      role: role
     });
-  };
-
-  const replaceCodeFences = (input: String) => {
-    const codeFencesRegex = /```([\w-]*)\n([\s\S]*?)\n```/g;
-    return input
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(codeFencesRegex, (match, p1, p2) => {
-        const languageClass = p1 ? ` class="language-${p1}"` : "";
-        return `<pre><code${languageClass}>${p2}</code></pre>`;
-      })
-      .replace(/\n/g, "<br>");
   };
 
   return { query, item, load, question, answer, clear, clearAll, startWith };
