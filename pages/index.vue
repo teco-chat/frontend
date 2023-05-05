@@ -33,7 +33,7 @@
             <v-list-item
               prepend-icon="mdi-message-outline"
               :title="item.title"
-              :subtitle="parse(item.createdAt)"
+              :subtitle="parseDateTimeFormat(item.createdAt)"
               @click="start(item.id)"
             >
             </v-list-item>
@@ -81,6 +81,7 @@ import { useChatStore } from "~~/stores/chat";
 import { useChatsStore } from "~~/stores/chats";
 import Tiptap from "~/components/Tiptap.vue";
 import { useAuthStore } from "~/stores/auth";
+import { parseDateTimeFormat } from "~~/utils/date";
 
 const chatStore = useChatStore();
 const authStore = useAuthStore();
@@ -109,16 +110,6 @@ clearAll();
 
 const searchNext = async () => {
   await chatsStore.searchNext();
-};
-
-const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
-  dateStyle: "short",
-  timeStyle: "short",
-});
-
-const parse = (time: any) => {
-  const date = new Date(time);
-  return dateTimeFormat.format(date);
 };
 
 const start = async (id: any) => {

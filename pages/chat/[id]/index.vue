@@ -5,7 +5,7 @@
         <v-card-item>
           <v-card-title>{{ itemStore.item.title }}</v-card-title>
           <v-card-subtitle>{{
-            parse(itemStore.item.createdAt)
+            parseDateTimeFormat(itemStore.item.createdAt)
           }}</v-card-subtitle>
           <v-chip
             class="ma-2"
@@ -68,16 +68,7 @@
 <script setup lang="ts">
 import { useItemStore } from "~/stores/item";
 import Tiptap from "~/components/Tiptap.vue";
-
-const dateTimeFormat = new Intl.DateTimeFormat("ko-KR", {
-  dateStyle: "short",
-  timeStyle: "short",
-});
-
-const parse = (time: any) => {
-  const date = new Date(time);
-  return dateTimeFormat.format(date);
-};
+import { parseDateTimeFormat } from "~~/utils/date"
 
 const itemStore = useItemStore();
 await itemStore.getItem(useRoute().params.id.toString());
