@@ -62,16 +62,55 @@
         </v-card>
         <br />
       </div>
+      <br />
+      <v-card align="left" max-width="640px" variant="text">
+        <v-divider></v-divider>
+        <br />
+        <b>댓글 총 {{ commentStore.item.length }}개 </b>
+        <br />
+      </v-card>
+      <br />
+      <div v-for="comment in commentStore.item" :key="comment.id">
+        <v-card align="left" max-width="640px" variant="outlined">
+          <v-card-item>
+            <v-card-subtitle>
+              <b>{{ comment.crewName }}</b>
+              &nbsp; &nbsp;
+              {{ parseDateTimeFormat(comment.createdAt) }}
+            </v-card-subtitle>
+            <template v-slot:append>
+              <v-icon
+                size="small"
+                color="error"
+                icon="mdi-minus-circle"
+                @click="commentStore.remove(comment.id)"
+              ></v-icon>
+            </template>
+            <v-card-text>
+              <Tiptap v-model="comment.content"></Tiptap></v-card-text
+          ></v-card-item>
+        </v-card>
+        <br />
+      </div>
     </v-container>
   </div>
 </template>
 <script setup lang="ts">
 import { useItemStore } from "~/stores/item";
+import { useCommentStore } from "~/stores/comment";
 import Tiptap from "~/components/Tiptap.vue";
-import { parseDateTimeFormat } from "~~/utils/date"
+import { parseDateTimeFormat } from "~~/utils/date";
 
 const itemStore = useItemStore();
 await itemStore.searchById(useRoute().params.id.toString());
+const commentStore = useCommentStore();
+await commentStore.searchByChatId(useRoute().params.id.toString());
+
+const remove =  async (id: any) => {
+  await commentStore.remove(id);
+  await commentStore.clearAll();
+  await commentStore.searchByChatId(useRoute().params.id.toString());
+};
 </script>
 
 <style></style>
