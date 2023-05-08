@@ -60,7 +60,7 @@
             @click:append-inner="chat"
             @click:clear="chatStore.clear"
             @keydown.enter.exact.prevent="chat"
-            @keydown.enter.shift.exact.prevent="chatStore.query += '\n'"
+            @keydown.enter.shift.prevent="appendNewLine"
             ><template v-slot:loader>
               <v-progress-linear
                 :active="chatStore.load"
@@ -111,6 +111,14 @@ const clearAll = async () => {
 
 const searchNext = async () => {
   await chatsStore.searchNext();
+};
+
+const appendNewLine = (event: any) => {
+  if (event.isComposing) {
+    event.stopPropagation();
+  } else if (event.shiftKey) {
+    chatStore.query += "\n";
+  }
 };
 
 clearAll();
