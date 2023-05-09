@@ -62,16 +62,82 @@
         </v-card>
         <br />
       </div>
+      <br />
+      <v-card align="left" max-width="640px" variant="text">
+        <v-divider></v-divider>
+        <br />
+        <b>댓글 총 {{ commentStore.item.length }}개 </b>
+        <br />
+      </v-card>
+      <br />
+      <div v-for="comment in commentStore.item" :key="comment.id">
+        <v-card align="left" max-width="640px" variant="outlined">
+          <v-card-item>
+            <v-card-subtitle>
+              <b>{{ comment.crewName }}</b>
+              &nbsp; &nbsp;
+              {{ parseDateTimeFormat(comment.createdAt) }}
+            </v-card-subtitle>
+            <template
+              v-if="useAuthStore().name == comment.crewName"
+              v-slot:append
+            >
+              <v-icon
+                size="small"
+                color="error"
+                icon="mdi-minus-circle"
+                @click="commentStore.remove(comment.id)"
+              ></v-icon>
+            </template>
+            <v-card-text>
+              <Tiptap v-model="comment.content"></Tiptap></v-card-text
+          ></v-card-item>
+        </v-card>
+        <br />
+      </div>
+      <v-card align="left" max-width="640px" variant="outlined">
+        <v-textarea
+          v-model="commentStore.text"
+          variant="solo"
+          label="댓글을 입력해주세요."
+          append-inner-icon="mdi-arrow-right"
+          clearable
+          clear-icon="mdi-close-circle"
+          hide-details
+          @click:append-inner="addComment"
+          @keydown.enter.exact.prevent="addComment"
+          @keydown.enter.shift.prevent="appendNewLine"
+        >
+        </v-textarea>
+      </v-card>
     </v-container>
   </div>
 </template>
 <script setup lang="ts">
 import { useItemStore } from "~/stores/item";
+import { useAuthStore } from "~/stores/auth";
+import { useCommentStore } from "~/stores/comment";
 import Tiptap from "~/components/Tiptap.vue";
-import { parseDateTimeFormat } from "~~/utils/date"
+import { parseDateTimeFormat } from "~~/utils/date";
+import { scrollToBottom } from "~~/utils/window";
 
 const itemStore = useItemStore();
 await itemStore.searchById(useRoute().params.id.toString());
+const commentStore = useCommentStore();
+await commentStore.searchByChatId(useRoute().params.id.toString());
+
+const addComment = async () => {
+  await commentStore.add(useRoute().params.id.toString());
+  scrollToBottom();
+};
+
+const appendNewLine = (event: any) => {
+  if (event.isComposing) {
+    event.stopPropagation();
+  } else if (event.shiftKey) {
+    commentStore.text += "\n";
+  }
+};
 </script>
 
 <style></style>
