@@ -4,6 +4,7 @@ import { useAuthStore } from "./auth";
 
 export const useCommentStore = defineStore("comment", () => {
   const item = ref();
+  const text = ref("");
   const load = ref(false);
 
   const clearAll = async () => {
@@ -11,20 +12,34 @@ export const useCommentStore = defineStore("comment", () => {
     load.value = false;
   };
 
-  const add = async (chatId: string, content: string) => {
+  const add = async (chatId: string) => {
+    if (load.value || text.value == "") {
+      return;
+    }
+    load.value = true;
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/comments",
       {
         headers: {
           name: useAuthStore().encodedName(),
+          "Content-Type": "application/json"
         },
         method: "POST",
         body: {
           chatId: chatId,
-          content: content,
+          content: text.value,
         },
       }
     );
+    const result: any = data.value;
+    item.value.push({ 
+      id : result["id"],
+      content: text.value,
+      crewName: useAuthStore().name,
+      createdAt: Date.now() 
+    });
+    text.value = "";
+    load.value = false;
   };
 
   const remove = async (commentId: string) => {
@@ -60,5 +75,5 @@ export const useCommentStore = defineStore("comment", () => {
     load.value = false;
   };
 
-  return { item, add, clearAll, remove, searchByChatId };
+  return { item, text, add, clearAll, remove, searchByChatId };
 });

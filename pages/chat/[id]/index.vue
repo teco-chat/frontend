@@ -78,7 +78,10 @@
               &nbsp; &nbsp;
               {{ parseDateTimeFormat(comment.createdAt) }}
             </v-card-subtitle>
-            <template v-if="useAuthStore().name == comment.crewName" v-slot:append>
+            <template
+              v-if="useAuthStore().name == comment.crewName"
+              v-slot:append
+            >
               <v-icon
                 size="small"
                 color="error"
@@ -92,6 +95,21 @@
         </v-card>
         <br />
       </div>
+      <v-card align="left" max-width="640px" variant="outlined">
+        <v-textarea
+          v-model="commentStore.text"
+          variant="solo"
+          label="댓글을 입력해주세요."
+          append-inner-icon="mdi-arrow-right"
+          clearable
+          clear-icon="mdi-close-circle"
+          hide-details
+          @click:append-inner="addComment"
+          @keydown.enter.exact.prevent="addComment"
+          @keydown.enter.shift.prevent="appendNewLine"
+        >
+        </v-textarea>
+      </v-card>
     </v-container>
   </div>
 </template>
@@ -101,11 +119,25 @@ import { useAuthStore } from "~/stores/auth";
 import { useCommentStore } from "~/stores/comment";
 import Tiptap from "~/components/Tiptap.vue";
 import { parseDateTimeFormat } from "~~/utils/date";
+import { scrollToBottom } from "~~/utils/window";
 
 const itemStore = useItemStore();
 await itemStore.searchById(useRoute().params.id.toString());
 const commentStore = useCommentStore();
 await commentStore.searchByChatId(useRoute().params.id.toString());
+
+const addComment = async () => {
+  await commentStore.add(useRoute().params.id.toString());
+  scrollToBottom();
+};
+
+const appendNewLine = (event: any) => {
+  if (event.isComposing) {
+    event.stopPropagation();
+  } else if (event.shiftKey) {
+    commentStore.text += "\n";
+  }
+};
 </script>
 
 <style></style>
