@@ -10,7 +10,7 @@ export const useCommentStore = defineStore("comment", () => {
     item.value = [];
     load.value = false;
   };
-  
+
   const add = async (chatId: string, content: string) => {
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/comments",
@@ -37,6 +37,7 @@ export const useCommentStore = defineStore("comment", () => {
         method: "DELETE",
       }
     );
+    item.value = item.value.filter((it: { id: string }) => it.id !== commentId);
   };
 
   const searchByChatId = async (chatId: string) => {

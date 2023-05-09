@@ -78,7 +78,7 @@
               &nbsp; &nbsp;
               {{ parseDateTimeFormat(comment.createdAt) }}
             </v-card-subtitle>
-            <template v-slot:append>
+            <template v-if="useAuthStore().name == comment.crewName" v-slot:append>
               <v-icon
                 size="small"
                 color="error"
@@ -97,6 +97,7 @@
 </template>
 <script setup lang="ts">
 import { useItemStore } from "~/stores/item";
+import { useAuthStore } from "~/stores/auth";
 import { useCommentStore } from "~/stores/comment";
 import Tiptap from "~/components/Tiptap.vue";
 import { parseDateTimeFormat } from "~~/utils/date";
@@ -105,12 +106,6 @@ const itemStore = useItemStore();
 await itemStore.searchById(useRoute().params.id.toString());
 const commentStore = useCommentStore();
 await commentStore.searchByChatId(useRoute().params.id.toString());
-
-const remove =  async (id: any) => {
-  await commentStore.remove(id);
-  await commentStore.clearAll();
-  await commentStore.searchByChatId(useRoute().params.id.toString());
-};
 </script>
 
 <style></style>
