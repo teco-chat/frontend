@@ -27,5 +27,16 @@ export const useItemStore = defineStore("item", () => {
     load.value = false;
   };
 
-  return { item, searchById };
+
+  const like = async () => {
+    if (item.value["isAlreadyClickLike"]) {
+      item.value["likeCount"] -= 1;
+      item.value["isAlreadyClickLike"] = false;
+    } else {
+      item.value["likeCount"] += 1;
+      item.value["isAlreadyClickLike"] = true;
+    }
+  }
+
+  return { item, like, searchById };
 });

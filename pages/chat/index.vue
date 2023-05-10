@@ -29,11 +29,6 @@
           :key="chat.title"
         >
           <v-card :to="'/chat/' + chat.id" align="left">
-            <v-card-item>
-              <v-card-title>{{ chat.title }}</v-card-title>
-              <v-card-subtitle>{{ parseDateTimeFormat(chat.createdAt) }}</v-card-subtitle>
-            </v-card-item>
-            <v-divider></v-divider>
             <div class="d-flex mr-4 align-center">
               <v-chip
                 class="ma-2"
@@ -72,6 +67,34 @@
               </v-chip>
               <v-spacer></v-spacer>
             </div>
+            <v-card-item>
+              <v-card-title>{{ chat.title }}</v-card-title>
+              <v-card-subtitle>{{
+                parseDateTimeFormat(chat.createdAt)
+              }}</v-card-subtitle>
+            </v-card-item>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-list-item class="w-100">
+                <template v-slot:append>
+                  <div class="justify-self-end">
+                    <v-icon
+                      class="me-2"
+                      icon="mdi-comment-question-outline"
+                    ></v-icon>
+                    <span class="subheading me-4">{{
+                      chat.totalQnaCount
+                    }}</span>
+                    <v-icon
+                      class="me-2"
+                      color="error"
+                      icon="mdi-heart-outline"
+                    ></v-icon>
+                    <span class="subheading">{{ chat.likeCount }}</span>
+                  </div>
+                </template>
+              </v-list-item>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -83,13 +106,15 @@
 <script lang="ts" setup>
 import { useItemsStore } from "~/stores/items";
 import { useSearchStore } from "~/stores/search";
+import { useChatLikeStore } from "~/stores/chat-like";
 import { COURSE } from "~/models/member/courseWithAll";
-import { parseDateTimeFormat } from "~~/utils/date"
+import { parseDateTimeFormat } from "~~/utils/date";
 import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);
 const itemsStore = useItemsStore();
 const searchStore = useSearchStore();
+const chatLikeStore = useChatLikeStore();
 
 const searchNext = async () => {
   if (isIntersect.value) {

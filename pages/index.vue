@@ -130,4 +130,7 @@ clearAll();
 * {
   font-family: "IBM Plex Sans KR", Arial, Verdana, Tahoma, sans-serif;
 }
+.emptyIcon {
+  color: #ffffff;
+}
 </style>
