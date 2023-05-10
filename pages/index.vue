@@ -29,9 +29,11 @@
             @click="clearAll"
           ></v-list-item>
           <v-divider></v-divider>
+          <v-list-item prepend-icon="mdi-menu" title="나의 채팅"> </v-list-item>
           <div v-for="item in chatsStore.items" :key="item.id">
             <v-list-item
-              prepend-icon="mdi-message-outline"
+              class="py-2"
+              prepend-icon="mdi-empty"
               :title="item.title"
               :subtitle="parseDateTimeFormat(item.createdAt)"
               @click="start(item.id)"
@@ -127,5 +129,8 @@ clearAll();
 <style scoped>
 * {
   font-family: "IBM Plex Sans KR", Arial, Verdana, Tahoma, sans-serif;
+}
+.emptyIcon {
+  color: #ffffff;
 }
 </style>

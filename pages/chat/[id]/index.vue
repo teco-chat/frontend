@@ -63,8 +63,19 @@
         <br />
       </div>
       <br />
-      <v-card align="left" max-width="640px" variant="text">
+      <v-card align="center" max-width="640px" variant="text">
         <v-divider></v-divider>
+        <v-btn
+          size="small"
+          color="surface-variant"
+          variant="text"
+          :icon="likeIcon"
+          @click="like"
+        ></v-btn>
+        <br />
+        {{ itemStore.item.likeCount }}
+      </v-card>
+      <v-card align="left" max-width="640px" variant="text">
         <br />
         <b>댓글 총 {{ commentStore.item.length }}개 </b>
         <br />
@@ -117,14 +128,18 @@
 import { useItemStore } from "~/stores/item";
 import { useAuthStore } from "~/stores/auth";
 import { useCommentStore } from "~/stores/comment";
+import { useChatLikeStore } from "~/stores/chat-like";
 import Tiptap from "~/components/Tiptap.vue";
 import { parseDateTimeFormat } from "~~/utils/date";
 import { scrollToBottom } from "~~/utils/window";
+import { useChatStore } from "~/stores/chat";
 
 const itemStore = useItemStore();
 await itemStore.searchById(useRoute().params.id.toString());
 const commentStore = useCommentStore();
 await commentStore.searchByChatId(useRoute().params.id.toString());
+const chatLikeStore = useChatLikeStore();
+const likeIcon = ref(itemStore.item.isAlreadyClickLike ? 'mdi-heart' : 'mdi-heart-outline');
 
 const addComment = async () => {
   await commentStore.add(useRoute().params.id.toString());
@@ -137,6 +152,12 @@ const appendNewLine = (event: any) => {
   } else if (event.shiftKey) {
     commentStore.text += "\n";
   }
+};
+
+const like = async () => {
+  await chatLikeStore.like(useRoute().params.id.toString());
+  await itemStore.like();
+  likeIcon.value = itemStore.item.isAlreadyClickLike ? 'mdi-heart' : 'mdi-heart-outline';
 };
 </script>
 
