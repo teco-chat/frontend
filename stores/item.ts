@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { replaceCodeFences } from "~~/utils/code";
+import { useAuthStore } from "./auth";
 
 export const useItemStore = defineStore("item", () => {
   const item = ref();
@@ -13,6 +14,10 @@ export const useItemStore = defineStore("item", () => {
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/chats/" + id,
       {
+        headers: {
+          name: useAuthStore().encodedName(),
+          "Content-Type": "application/json"
+        },
         method: "GET",
       }
     );
@@ -26,7 +31,6 @@ export const useItemStore = defineStore("item", () => {
     }
     load.value = false;
   };
-
 
   const like = async () => {
     if (item.value["isAlreadyClickLike"]) {
