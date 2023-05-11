@@ -28,6 +28,10 @@ export const useChatStore = defineStore("chat", () => {
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/chats/" + id,
       {
+        headers: {
+          name: useAuthStore().encodedName(),
+          "Content-Type": "application/json"
+        },
         method: "GET",
       }
     );
