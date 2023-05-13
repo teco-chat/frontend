@@ -67,7 +67,7 @@
         <v-divider></v-divider>
         <v-btn
           size="small"
-          color="surface-variant"
+          color="error"
           variant="text"
           :icon="likeIcon"
           @click="like"
