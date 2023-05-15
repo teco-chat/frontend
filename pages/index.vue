@@ -114,6 +114,7 @@ const clearAll = async () => {
 const clearChatsStore = async () => {
   chatsStore.clearAll();
   await chatsStore.searchNext();
+  scrollToBottom();
 };
 
 const searchNext = async () => {
