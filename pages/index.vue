@@ -111,6 +111,11 @@ const clearAll = async () => {
   await chatsStore.searchNext();
 };
 
+const clearChatsStore = async () => {
+  chatsStore.clearAll();
+  await chatsStore.searchNext();
+};
+
 const searchNext = async () => {
   await chatsStore.searchNext();
 };
@@ -123,7 +128,7 @@ const appendNewLine = (event: any) => {
   }
 };
 
-clearAll();
+clearChatsStore();
 </script>
 
 <style scoped>
