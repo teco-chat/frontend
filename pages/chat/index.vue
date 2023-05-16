@@ -73,6 +73,9 @@
                 parseDateTimeFormat(chat.createdAt)
               }}</v-card-subtitle>
             </v-card-item>
+            <v-div v-for="keyword in chat.keywords" :key="keyword">
+              <v-chip size="small" class="ma-2" color="warning" label> {{ keyword }} </v-chip>
+            </v-div>
             <v-divider></v-divider>
             <v-card-actions>
               <v-list-item class="w-100">
