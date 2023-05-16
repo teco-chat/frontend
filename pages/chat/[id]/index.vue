@@ -3,10 +3,6 @@
     <v-container align="center">
       <v-card align="left" max-width="640px">
         <v-card-item>
-          <v-card-title>{{ itemStore.item.title }}</v-card-title>
-          <v-card-subtitle>{{
-            parseDateTimeFormat(itemStore.item.createdAt)
-          }}</v-card-subtitle>
           <v-chip
             class="ma-2"
             color="secondary"
@@ -42,6 +38,17 @@
           >
             안드로이드
           </v-chip>
+          <div class="ma-2">
+          <v-card-title>{{ itemStore.item.title }}</v-card-title>
+          <v-card-subtitle>{{
+            parseDateTimeFormat(itemStore.item.createdAt)
+          }}</v-card-subtitle>
+          </div>
+          <chipdiv v-for="keyword in itemStore.item.keywords" :key="keyword">
+            <v-chip size="small" class="ma-2" color="warning" label>
+              {{ keyword }}
+            </v-chip>
+          </chipdiv>
         </v-card-item>
       </v-card>
       <br />
@@ -139,7 +146,9 @@ await itemStore.searchById(useRoute().params.id.toString());
 const commentStore = useCommentStore();
 await commentStore.searchByChatId(useRoute().params.id.toString());
 const chatLikeStore = useChatLikeStore();
-const likeIcon = ref(itemStore.item.isAlreadyClickLike ? 'mdi-heart' : 'mdi-heart-outline');
+const likeIcon = ref(
+  itemStore.item.isAlreadyClickLike ? "mdi-heart" : "mdi-heart-outline"
+);
 
 const addComment = async () => {
   await commentStore.add(useRoute().params.id.toString());
@@ -157,7 +166,9 @@ const appendNewLine = (event: any) => {
 const like = async () => {
   await chatLikeStore.like(useRoute().params.id.toString());
   await itemStore.like();
-  likeIcon.value = itemStore.item.isAlreadyClickLike ? 'mdi-heart' : 'mdi-heart-outline';
+  likeIcon.value = itemStore.item.isAlreadyClickLike
+    ? "mdi-heart"
+    : "mdi-heart-outline";
 };
 </script>
 
