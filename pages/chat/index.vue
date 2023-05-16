@@ -28,7 +28,7 @@
           xxl="2"
           :key="chat.title"
         >
-          <v-card :to="'/chat/' + chat.id" align="left">
+          <v-card :to="'/chat/' + chat.id" align="left" min-height="240px">
             <div class="d-flex mr-4 align-center">
               <v-chip
                 class="ma-2"
@@ -74,10 +74,11 @@
               }}</v-card-subtitle>
             </v-card-item>
             <chipdiv v-for="keyword in chat.keywords" :key="keyword">
-              <v-chip size="small" class="ma-2" color="warning" label> {{ keyword.keyword }} </v-chip>
+              <v-chip size="small" class="ma-2" color="warning" label>
+                {{ keyword.keyword }}
+              </v-chip>
             </chipdiv>
-            <v-divider></v-divider>
-            <v-card-actions>
+            <v-card-actions class="card-actions">
               <v-list-item class="w-100">
                 <template v-slot:append>
                   <div class="justify-self-end">
@@ -135,3 +136,11 @@ const clearAndSearch = async () => {
 
 clearAndSearch();
 </script>
+
+<style scoped>
+.card-actions {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+</style>
