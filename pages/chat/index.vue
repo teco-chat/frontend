@@ -75,7 +75,7 @@
             </v-card-item>
             <chipdiv v-for="keyword in chat.keywords" :key="keyword">
               <v-chip size="small" class="ma-2" color="warning" label>
-                {{ keyword.keyword }}
+                {{ keywordShortener(keyword.keyword) }}
               </v-chip>
             </chipdiv>
             <v-card-actions class="card-actions">
@@ -133,6 +133,10 @@ const clearAndSearch = async () => {
   await searchStore.clear();
   await searchStore.searchNext();
 };
+
+const keywordShortener = (keyword: string) => {
+  return keyword.substring(0, 20) + (keyword.length > 20 ? "..." : "");
+}
 
 clearAndSearch();
 </script>
