@@ -75,7 +75,7 @@
             </v-card-item>
             <chipdiv v-for="keyword in chat.keywords" :key="keyword">
               <v-chip size="small" class="ma-2" color="warning" label>
-                {{ keywordShortener(keyword.keyword) }}
+                {{ '#' + keywordShortener(keyword.keyword) }}
               </v-chip>
             </chipdiv>
             <v-card-actions class="card-actions">

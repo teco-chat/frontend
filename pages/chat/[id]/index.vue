@@ -46,7 +46,7 @@
           </div>
           <chipdiv v-for="keyword in itemStore.item.keywords" :key="keyword">
             <v-chip size="small" class="ma-2" color="warning" label>
-              {{ keyword.keyword }}
+              {{ '#' + keyword.keyword }}
             </v-chip>
           </chipdiv>
         </v-card-item>
