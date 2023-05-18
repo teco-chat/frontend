@@ -8,6 +8,7 @@
     <v-app-bar flat class="dohyeon">
       <v-btn @click="navigateTo('/')"><h2>테코GPT</h2></v-btn>
       <v-btn variant="text" align="left" to="/chat">채팅 목록</v-btn>
+      <v-btn variant="text" align="left" to="/like">내가 좋아요한 채팅 목록</v-btn>
       <v-spacer></v-spacer>
       <v-btn @click="toggleTheme" :icon="themeIcon"></v-btn>
       <v-btn variant="text" icon="mdi-account-outline">
