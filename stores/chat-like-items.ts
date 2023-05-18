@@ -1,10 +1,8 @@
 import { defineStore } from "pinia";
 import { useAuthStore } from "./auth";
-import { useItemsStore } from "./items";
 
 export const useChatLikeItemsStore = defineStore("chat-like-items", () => {
   const items: any = ref([]);
-  const page = ref(0);
   const load = ref(false);
 
   const searchNext = async () => {
@@ -31,8 +29,7 @@ export const useChatLikeItemsStore = defineStore("chat-like-items", () => {
   };
 
   const clear = async () => {
-    await useItemsStore().clear();
-    page.value = 0;
+    items.value = [];
   };
 
   return { items, searchNext, clear };
