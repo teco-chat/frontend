@@ -11,10 +11,10 @@
           lg="4"
           xl="3"
           xxl="2"
-          :key="chat.chatInfo.title"
+          :key="chat.title"
         >
           <v-card
-            :to="'/chat/' + chat.chatInfo.id"
+            :to="'/chat/' + chat.id"
             align="left"
             min-height="240px"
           >
@@ -25,10 +25,10 @@
                 text-color="white"
                 prepend-icon="mdi-account-circle"
               >
-                {{ chat.chatInfo.crewName }}
+                {{ chat.crewName }}
               </v-chip>
               <v-chip
-                v-if="chat.chatInfo.course == 'BACKEND'"
+                v-if="chat.course == 'BACKEND'"
                 class="ma-2"
                 color="success"
                 text-color="white"
@@ -37,7 +37,7 @@
                 백엔드
               </v-chip>
               <v-chip
-                v-if="chat.chatInfo.course == 'FRONTEND'"
+                v-if="chat.course == 'FRONTEND'"
                 class="ma-2"
                 color="info"
                 text-color="white"
@@ -46,7 +46,7 @@
                 프론트엔드
               </v-chip>
               <v-chip
-                v-if="chat.chatInfo.course == 'ANDROID'"
+                v-if="chat.course == 'ANDROID'"
                 class="ma-2"
                 color="primary"
                 text-color="white"
@@ -57,12 +57,12 @@
               <v-spacer></v-spacer>
             </div>
             <v-card-item>
-              <v-card-title>{{ chat.chatInfo.title }}</v-card-title>
+              <v-card-title>{{ chat.title }}</v-card-title>
               <v-card-subtitle>{{
-                parseDateTimeFormat(chat.chatInfo.createdAt)
+                parseDateTimeFormat(chat.createdAt)
               }}</v-card-subtitle>
             </v-card-item>
-            <chipdiv v-for="keyword in chat.chatInfo.keywords" :key="keyword">
+            <chipdiv v-for="keyword in chat.keywords" :key="keyword">
               <v-chip size="small" class="ma-2" color="warning" label>
                 {{ "#" + keywordShortener(keyword.keyword) }}
               </v-chip>
@@ -76,7 +76,7 @@
                       icon="mdi-comment-question-outline"
                     ></v-icon>
                     <span class="subheading me-4">{{
-                      chat.chatInfo.totalQnaCount
+                      chat.totalQnaCount
                     }}</span>
                     <v-icon
                       class="me-2"
@@ -84,7 +84,7 @@
                       icon="mdi-heart"
                     ></v-icon>
                     <span class="subheading">{{
-                      chat.chatInfo.likeCount
+                      chat.likeCount
                     }}</span>
                   </div>
                 </template>
@@ -93,6 +93,7 @@
           </v-card>
         </v-col>
       </v-row>
+      <v-card v-intersect="searchNext"></v-card>
     </v-container>
   </div>
 </template>
@@ -103,7 +104,17 @@ import { COURSE } from "~/models/member/courseWithAll";
 import { parseDateTimeFormat } from "~~/utils/date";
 import Tiptap from "~/components/Tiptap.vue";
 
+const isIntersect = ref(false);
 const chatLikeItemsStore = useChatLikeItemsStore();
+
+const searchNext = async () => {
+  if (isIntersect.value) {
+    return;
+  }
+  isIntersect.value = true;
+  await chatLikeItemsStore.searchNext();
+  isIntersect.value = false;
+};
 
 const clearAndSearch = async () => {
   await chatLikeItemsStore.clear();
