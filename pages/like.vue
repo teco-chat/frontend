@@ -13,11 +13,7 @@
           xxl="2"
           :key="chat.title"
         >
-          <v-card
-            :to="'/chat/' + chat.id"
-            align="left"
-            min-height="240px"
-          >
+          <v-card :to="'/chat/' + chat.id" align="left" min-height="240px">
             <div class="d-flex mr-4 align-center">
               <v-chip
                 class="ma-2"
@@ -73,19 +69,22 @@
                   <div class="justify-self-end">
                     <v-icon
                       class="me-2"
-                      icon="mdi-comment-question-outline"
+                      icon="mdi-robot-confused-outline"
                     ></v-icon>
                     <span class="subheading me-4">{{
                       chat.totalQnaCount
                     }}</span>
                     <v-icon
                       class="me-2"
+                      icon="mdi-comment-text-outline"
+                    ></v-icon>
+                    <span class="subheading me-4">{{ chat.commentCount }}</span>
+                    <v-icon
+                      class="me-2"
                       color="error"
                       icon="mdi-heart"
                     ></v-icon>
-                    <span class="subheading">{{
-                      chat.likeCount
-                    }}</span>
+                    <span class="subheading">{{ chat.likeCount }}</span>
                   </div>
                 </template>
               </v-list-item>
@@ -100,7 +99,6 @@
 
 <script lang="ts" setup>
 import { useChatLikeItemsStore } from "~/stores/chat-like-items";
-import { COURSE } from "~/models/member/courseWithAll";
 import { parseDateTimeFormat } from "~~/utils/date";
 import Tiptap from "~/components/Tiptap.vue";
 
