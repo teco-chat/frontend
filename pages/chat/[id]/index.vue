@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container align="center">
-      <v-card align="left" max-width="640px">
+      <v-card align="left" max-width="800px">
         <v-card-item>
           <v-chip
             class="ma-2"
@@ -53,16 +53,16 @@
       </v-card>
       <br />
       <div v-for="message in itemStore.item.messages" :key="message.id">
-        <v-card align="left" max-width="640px">
+        <v-card align="left" max-width="800px">
           <v-card-item>
-            <v-card-subtitle v-if="message.role == 'user'"
+            <v-card-text v-if="message.role == 'user'"
               ><v-icon class="me-2" icon="mdi-account-outline"></v-icon
-              >{{ itemStore.item.crewName }}</v-card-subtitle
+              >{{ itemStore.item.crewName }}</v-card-text
             >
-            <v-card-subtitle v-if="message.role != 'user'">
+            <v-card-text v-if="message.role != 'user'">
               <v-icon class="me-2" icon="mdi-robot-happy-outline"></v-icon>
               Chat-GPT
-            </v-card-subtitle>
+            </v-card-text>
             <v-card-text>
               <Tiptap v-model="message.content"></Tiptap
             ></v-card-text>
@@ -72,7 +72,7 @@
         <br />
       </div>
       <br />
-      <v-card align="center" max-width="640px" variant="text">
+      <v-card align="center" max-width="800px" variant="text">
         <v-divider></v-divider>
         <v-tooltip location="top" align="center">
           <template v-slot:activator="{ props }">
@@ -91,14 +91,14 @@
         <br />
         {{ itemStore.item.likeCount }}
       </v-card>
-      <v-card align="left" max-width="640px" variant="text">
+      <v-card align="left" max-width="800px" variant="text">
         <br />
         <b>댓글 총 {{ commentStore.item.length }}개 </b>
         <br />
       </v-card>
       <br />
       <div v-for="comment in commentStore.item" :key="comment.id">
-        <v-card align="left" max-width="640px" variant="outlined">
+        <v-card align="left" max-width="800px" variant="outlined">
           <v-card-item>
             <v-card-subtitle>
               <b>{{ comment.crewName }}</b>
@@ -122,7 +122,7 @@
         </v-card>
         <br />
       </div>
-      <v-card align="left" max-width="640px" variant="outlined">
+      <v-card align="left" max-width="800px" variant="outlined">
         <v-textarea
           v-model="commentStore.text"
           variant="solo"
