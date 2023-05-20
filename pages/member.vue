@@ -54,7 +54,7 @@
 </template>
 <script lang="ts" setup>
 import { useAuthStore } from "~~/stores/auth";
-import { COURSE } from "~~/models/member/course";
+import { COURSE } from "~~/models/course";
 
 const authStore = useAuthStore();
 const loginAlert = ref(false);

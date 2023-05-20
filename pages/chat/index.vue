@@ -111,7 +111,7 @@
 import { useItemsStore } from "~/stores/items";
 import { useSearchStore } from "~/stores/search";
 import { useChatLikeStore } from "~/stores/chat-like";
-import { COURSE } from "~/models/member/courseWithAll";
+import { COURSE } from "~/models/courseWithAll";
 import { parseDateTimeFormat } from "~~/utils/date";
 import Tiptap from "~/components/Tiptap.vue";
 

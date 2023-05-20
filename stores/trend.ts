@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { TREND } from "~/models/trend/trend";
+import { TREND } from "~/models/trend";
 
 export const useTrendStore = defineStore("trend", () => {
   const items: any = ref([]);

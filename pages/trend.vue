@@ -109,7 +109,7 @@
 
 <script lang="ts" setup>
 import { useTrendStore } from "~/stores/trend";
-import { TREND } from "~/models/trend/trend";
+import { TREND } from "~/models/trend";
 import { parseDateTimeFormat } from "~~/utils/date";
 import Tiptap from "~/components/Tiptap.vue";
 
