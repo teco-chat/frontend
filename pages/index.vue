@@ -7,14 +7,28 @@
       <div v-for="message in chatStore.item.messages" :key="message.id">
         <v-card align="left">
           <v-card-item>
-            <v-card-text v-if="message.role == 'user'">
-              <v-icon class="me-2" icon="mdi-account-outline"></v-icon>
-              {{ authStore.name }}</v-card-text
+            <v-chip
+              size="small"
+              class="ma-2"
+              text-color="white"
+              prepend-icon="mdi-account-outline"
+              variant="outlined"
+              v-if="message.role == 'user'"
+              label
             >
-            <v-card-text v-if="message.role != 'user'"
-              ><v-icon class="me-2" icon="mdi-robot-happy-outline"></v-icon>
-              Chat-GPT</v-card-text
+              {{ authStore.name }}
+            </v-chip>
+            <v-chip
+              size="small"
+              class="ma-2"
+              text-color="white"
+              prepend-icon="mdi-robot-happy-outline"
+              variant="outlined"
+              v-if="message.role != 'user'"
+              label
             >
+              Chat-GPT
+            </v-chip>
             <v-card-text>
               <Tiptap v-model="message.content"></Tiptap
             ></v-card-text>

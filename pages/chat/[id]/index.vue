@@ -4,21 +4,14 @@
       <v-card align="left" max-width="800px">
         <v-card-item>
           <v-chip
-            class="ma-2"
-            color="secondary"
-            text-color="white"
-            prepend-icon="mdi-account-circle"
-          >
-            {{ itemStore.item.crewName }}
-          </v-chip>
-          <v-chip
             v-if="itemStore.item.course == 'BACKEND'"
             class="ma-2"
             color="success"
             text-color="white"
             prepend-icon="mdi-language-java"
+            variant="outlined"
           >
-            백엔드
+            {{ itemStore.item.crewName }}
           </v-chip>
           <v-chip
             v-if="itemStore.item.course == 'FRONTEND'"
@@ -26,8 +19,9 @@
             color="info"
             text-color="white"
             prepend-icon="mdi-language-typescript"
+            variant="outlined"
           >
-            프론트엔드
+            {{ itemStore.item.crewName }}
           </v-chip>
           <v-chip
             v-if="itemStore.item.course == 'ANDROID'"
@@ -35,8 +29,9 @@
             color="primary"
             text-color="white"
             prepend-icon="mdi-language-kotlin"
+            variant="outlined"
           >
-            안드로이드
+            {{ itemStore.item.crewName }}
           </v-chip>
           <div class="ma-2">
             <v-card-title>{{ itemStore.item.title }}</v-card-title>
@@ -45,7 +40,13 @@
             }}</v-card-subtitle>
           </div>
           <chipdiv v-for="keyword in itemStore.item.keywords" :key="keyword">
-            <v-chip size="small" class="ma-2" color="warning" label>
+            <v-chip
+              size="small"
+              class="ma-2"
+              color="warning"
+              label
+              variant="outlined"
+            >
               {{ "#" + keyword.keyword }}
             </v-chip>
           </chipdiv>
@@ -55,14 +56,28 @@
       <div v-for="message in itemStore.item.messages" :key="message.id">
         <v-card align="left" max-width="800px">
           <v-card-item>
-            <v-card-text v-if="message.role == 'user'"
-              ><v-icon class="me-2" icon="mdi-account-outline"></v-icon
-              >{{ itemStore.item.crewName }}</v-card-text
+            <v-chip
+              size="small"
+              class="ma-2"
+              text-color="white"
+              prepend-icon="mdi-account-outline"
+              variant="outlined"
+              v-if="message.role == 'user'"
+              label
             >
-            <v-card-text v-if="message.role != 'user'">
-              <v-icon class="me-2" icon="mdi-robot-happy-outline"></v-icon>
+              {{ itemStore.item.crewName }}
+            </v-chip>
+            <v-chip
+              size="small"
+              class="ma-2"
+              text-color="white"
+              prepend-icon="mdi-robot-happy-outline"
+              variant="outlined"
+              v-if="message.role != 'user'"
+              label
+            >
               Chat-GPT
-            </v-card-text>
+            </v-chip>
             <v-card-text>
               <Tiptap v-model="message.content"></Tiptap
             ></v-card-text>

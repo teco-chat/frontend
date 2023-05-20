@@ -16,21 +16,14 @@
           <v-card :to="'/chat/' + chat.id" align="left" min-height="240px">
             <div class="d-flex mr-4 align-center">
               <v-chip
-                class="ma-2"
-                color="secondary"
-                text-color="white"
-                prepend-icon="mdi-account-circle"
-              >
-                {{ chat.crewName }}
-              </v-chip>
-              <v-chip
                 v-if="chat.course == 'BACKEND'"
                 class="ma-2"
                 color="success"
                 text-color="white"
                 prepend-icon="mdi-language-java"
+                variant="outlined"
               >
-                백엔드
+                {{ chat.crewName }}
               </v-chip>
               <v-chip
                 v-if="chat.course == 'FRONTEND'"
@@ -38,8 +31,9 @@
                 color="info"
                 text-color="white"
                 prepend-icon="mdi-language-typescript"
+                variant="outlined"
               >
-                프론트엔드
+                {{ chat.crewName }}
               </v-chip>
               <v-chip
                 v-if="chat.course == 'ANDROID'"
@@ -47,8 +41,9 @@
                 color="primary"
                 text-color="white"
                 prepend-icon="mdi-language-kotlin"
+                variant="outlined"
               >
-                안드로이드
+                {{ chat.crewName }}
               </v-chip>
               <v-spacer></v-spacer>
             </div>
@@ -59,7 +54,13 @@
               }}</v-card-subtitle>
             </v-card-item>
             <chipdiv v-for="keyword in chat.keywords" :key="keyword">
-              <v-chip size="small" class="ma-2" color="warning" label>
+              <v-chip
+                size="small"
+                class="ma-2"
+                color="warning"
+                label
+                variant="outlined"
+              >
                 {{ "#" + keywordShortener(keyword.keyword) }}
               </v-chip>
             </chipdiv>
