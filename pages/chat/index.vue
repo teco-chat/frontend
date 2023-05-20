@@ -75,7 +75,7 @@
             </v-card-item>
             <chipdiv v-for="keyword in chat.keywords" :key="keyword">
               <v-chip size="small" class="ma-2" color="warning" label>
-                {{ '#' + keywordShortener(keyword.keyword) }}
+                {{ "#" + keywordShortener(keyword.keyword) }}
               </v-chip>
             </chipdiv>
             <v-card-actions class="card-actions">
@@ -84,18 +84,16 @@
                   <div class="justify-self-end">
                     <v-icon
                       class="me-2"
-                      icon="mdi-comment-text-outline"
-                    ></v-icon>
-                    <span class="subheading me-4">{{
-                      chat.commentCount 
-                    }}</span>
-                    <v-icon
-                      class="me-2"
-                      icon="mdi-comment-question-outline"
+                      icon="mdi-robot-confused-outline"
                     ></v-icon>
                     <span class="subheading me-4">{{
                       chat.totalQnaCount
                     }}</span>
+                    <v-icon
+                      class="me-2"
+                      icon="mdi-comment-text-outline"
+                    ></v-icon>
+                    <span class="subheading me-4">{{ chat.commentCount }}</span>
                     <v-icon
                       class="me-2"
                       color="error"
@@ -143,7 +141,7 @@ const clearAndSearch = async () => {
 
 const keywordShortener = (keyword: string) => {
   return keyword.substring(0, 20) + (keyword.length > 20 ? "..." : "");
-}
+};
 
 clearAndSearch();
 </script>

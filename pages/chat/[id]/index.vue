@@ -56,11 +56,13 @@
         <v-card align="left" max-width="640px">
           <v-card-item>
             <v-card-subtitle v-if="message.role == 'user'"
-              >{{ itemStore.item.crewName }}의 질문</v-card-subtitle
+              ><v-icon class="me-2" icon="mdi-account-outline"></v-icon
+              >{{ itemStore.item.crewName }}</v-card-subtitle
             >
-            <v-card-subtitle v-if="message.role != 'user'"
-              >Chat-GPT의 답변</v-card-subtitle
-            >
+            <v-card-subtitle v-if="message.role != 'user'">
+              <v-icon class="me-2" icon="mdi-robot-happy-outline"></v-icon>
+              Chat-GPT
+            </v-card-subtitle>
             <v-card-text>
               <Tiptap v-model="message.content"></Tiptap
             ></v-card-text>

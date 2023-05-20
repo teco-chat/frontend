@@ -7,11 +7,13 @@
       <div v-for="message in chatStore.item.messages" :key="message.id">
         <v-card align="left">
           <v-card-item>
-            <v-card-subtitle v-if="message.role == 'user'"
-              >{{ authStore.name }}의 질문</v-card-subtitle
+            <v-card-subtitle v-if="message.role == 'user'">
+              <v-icon class="me-2" icon="mdi-account-outline"></v-icon>
+              {{ authStore.name }}</v-card-subtitle
             >
             <v-card-subtitle v-if="message.role != 'user'"
-              >Chat-GPT의 답변</v-card-subtitle
+              ><v-icon class="me-2" icon="mdi-robot-happy-outline"></v-icon>
+              Chat-GPT</v-card-subtitle
             >
             <v-card-text>
               <Tiptap v-model="message.content"></Tiptap

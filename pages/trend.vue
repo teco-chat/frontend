@@ -84,16 +84,16 @@
                   <div class="justify-self-end">
                     <v-icon
                       class="me-2"
-                      icon="mdi-comment-text-outline"
-                    ></v-icon>
-                    <span class="subheading me-4">{{ chat.commentCount }}</span>
-                    <v-icon
-                      class="me-2"
-                      icon="mdi-comment-question-outline"
+                      icon="mdi-robot-confused-outline"
                     ></v-icon>
                     <span class="subheading me-4">{{
                       chat.totalQnaCount
                     }}</span>
+                    <v-icon
+                      class="me-2"
+                      icon="mdi-comment-text-outline"
+                    ></v-icon>
+                    <span class="subheading me-4">{{ chat.commentCount }}</span>
                     <v-icon
                       class="me-2"
                       color="error"
