@@ -1,50 +1,67 @@
 <template>
   <div>
     <v-container align="center">
-      <v-card variant="solo" max-width="640px">
-        <v-item-group selected-class="bg-secondary" mandatory>
-          <h2>분야를 선택해주세요.</h2>
+      <v-card align="left" max-width="800px">
+        <v-card-item>
+          <h3>
+            <v-icon class="me-2" icon="mdi-xml"></v-icon>과정을 선택해주세요.
+          </h3>
           <br />
-          <v-row>
-            <v-col v-for="course in COURSE" :key="course.value">
-              <v-item v-slot="{ toggle }">
-                <v-card
-                  variant="outlined"
-                  :class="[
-                    'd-flex align-center',
-                    { 'bg-secondary': course.value == authStore.course },
-                  ]"
-                  dark
-                  height="100"
-                  @click="select(toggle, course.value)"
-                >
-                  <div class="text-h5 flex-grow-1 text-center">
-                    {{ course.key }}
-                  </div>
-                </v-card>
-              </v-item>
-            </v-col>
-          </v-row>
-          <br /><br />
-          <h2>닉네임을 입력해주세요.</h2>
+          <v-chip-group mandatory v-model="authStore.courseIndex">
+            <v-chip
+              class="ma-2"
+              color="success"
+              text-color="white"
+              prepend-icon="mdi-language-java"
+              variant="outlined"
+            >
+              백엔드
+            </v-chip>
+            <v-chip
+              class="ma-2"
+              color="info"
+              text-color="white"
+              prepend-icon="mdi-language-typescript"
+              variant="outlined"
+            >
+              프론트엔드
+            </v-chip>
+            <v-chip
+              class="ma-2"
+              color="primary"
+              text-color="white"
+              prepend-icon="mdi-language-kotlin"
+              variant="outlined"
+            >
+              안드로이드
+            </v-chip>
+          </v-chip-group>
+        </v-card-item>
+        <v-card-item>
+          <h3>
+            <v-icon class="me-2" icon="mdi-account-outline"></v-icon>닉네임을
+            입력해주세요.
+          </h3>
           <br />
           <v-text-field
             v-model="authStore.name"
-            label="닉네임"
-            single-line
+            :label="nameLabel"
             hide-details
             variant="outlined"
             @click:append-inner="login"
             @keypress.enter="login"
           ></v-text-field>
           <br />
-          <v-btn block variant="outlined" @click="login"
-            ><h2>정보 입력하고 무료로 GPT 이용하기</h2></v-btn
-          >
-        </v-item-group>
+        </v-card-item>
+        <v-card-item align="right">
+            <v-btn variant="outlined" color="success" @click="login"
+              ><h2>완료</h2></v-btn
+            >
+        </v-card-item>
+        <v-divider></v-divider>
       </v-card>
       <v-snackbar v-model="loginAlert" location="bottom"
-        >로그인 실패
+        >과정과 닉네임을 입력해주세요.
         <template v-slot:actions>
           <v-btn color="error" @click="loginAlert = false"> 닫기 </v-btn>
         </template>
@@ -56,15 +73,21 @@
 import { useAuthStore } from "~~/stores/auth";
 import { COURSE } from "~~/models/course";
 
+const randomLabel = ["음식을", "색상을", "과일을", "과자를", "브랜드를"];
+const generateNameLabel = () => {
+  var label = randomLabel[Math.floor(Math.random() * randomLabel.length)];
+  return "익명을 원한다면 좋아하는 " + label + " 입력해보는건 어떨까요?";
+};
+
 const authStore = useAuthStore();
 const loginAlert = ref(false);
 
-const select = (toggle: any, selectedCourse: string) => {
-  toggle();
-  authStore.course = selectedCourse;
-};
+const nameLabel = ref(generateNameLabel());
 
 const login = async () => {
+  if (authStore.isInvalidCredential()) {
+    loginAlert.value = true;
+  }
   const error = await authStore.login();
 
   if (error?.value) {

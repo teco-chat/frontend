@@ -1,13 +1,15 @@
 import { defineStore } from "pinia";
+import { COURSE } from "~/models/course";
 
 export const useAuthStore = defineStore(
   "auth",
   () => {
-    const course = ref("");
+    const courseIndex = ref(4);
     const name = ref("");
+    const course = [COURSE.BE, COURSE.FE, COURSE.AD];
 
     const isInvalidCredential = () => {
-      return !course.value || !name.value;
+      return courseIndex.value == 4 || !name.value;
     };
 
     const encodedName = () => {
@@ -25,7 +27,7 @@ export const useAuthStore = defineStore(
         {
           body: {
             name: name.value,
-            course: course.value,
+            course: course[courseIndex.value].value,
           },
           method: "POST",
         }
@@ -34,7 +36,7 @@ export const useAuthStore = defineStore(
       return error;
     };
 
-    return { course, name, isInvalidCredential, login, encodedName };
+    return { courseIndex, name, isInvalidCredential, login, encodedName };
   },
   { persist: true }
 );
