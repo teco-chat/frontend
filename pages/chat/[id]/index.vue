@@ -39,14 +39,14 @@
             안드로이드
           </v-chip>
           <div class="ma-2">
-          <v-card-title>{{ itemStore.item.title }}</v-card-title>
-          <v-card-subtitle>{{
-            parseDateTimeFormat(itemStore.item.createdAt)
-          }}</v-card-subtitle>
+            <v-card-title>{{ itemStore.item.title }}</v-card-title>
+            <v-card-subtitle>{{
+              parseDateTimeFormat(itemStore.item.createdAt)
+            }}</v-card-subtitle>
           </div>
           <chipdiv v-for="keyword in itemStore.item.keywords" :key="keyword">
             <v-chip size="small" class="ma-2" color="warning" label>
-              {{ '#' + keyword.keyword }}
+              {{ "#" + keyword.keyword }}
             </v-chip>
           </chipdiv>
         </v-card-item>
@@ -72,13 +72,20 @@
       <br />
       <v-card align="center" max-width="640px" variant="text">
         <v-divider></v-divider>
-        <v-btn
-          size="small"
-          color="error"
-          variant="text"
-          :icon="likeIcon"
-          @click="like"
-        ></v-btn>
+        <v-tooltip location="top" align="center">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              size="small"
+              color="error"
+              variant="text"
+              :icon="likeIcon"
+              @click="like"
+            ></v-btn>
+          </template>
+          <span v-html="itemStore.likeCrewName()"></span>
+        </v-tooltip>
+
         <br />
         {{ itemStore.item.likeCount }}
       </v-card>
@@ -143,6 +150,7 @@ import { useChatStore } from "~/stores/chat";
 
 const itemStore = useItemStore();
 await itemStore.searchById(useRoute().params.id.toString());
+await itemStore.searchLikeCrewById(useRoute().params.id.toString());
 const commentStore = useCommentStore();
 await commentStore.searchByChatId(useRoute().params.id.toString());
 const chatLikeStore = useChatLikeStore();
