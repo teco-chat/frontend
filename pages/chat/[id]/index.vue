@@ -124,7 +124,7 @@
         <v-textarea
           v-model="commentStore.text"
           variant="solo"
-          label="댓글을 입력해주세요."
+          label="댓글을 입력해주세요. 줄바꿈은 Shift + Enter입니다."
           append-inner-icon="mdi-arrow-right"
           clearable
           clear-icon="mdi-close-circle"
