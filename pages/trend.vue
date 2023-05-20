@@ -5,11 +5,11 @@
         <v-chip-group
           selected-class="text-secondary"
           column
-          v-model="searchStore.courseIndex"
+          v-model="trendStore.trendIndex"
           mandatory
         >
           <v-chip
-            v-for="tag in COURSE"
+            v-for="tag in TREND"
             :key="tag"
             filter
             @click="clearAndSearch"
@@ -20,7 +20,7 @@
       </div>
       <v-row>
         <v-col
-          v-for="chat in itemsStore.items"
+          v-for="chat in trendStore.items"
           cols="12"
           sm="4"
           lg="4"
@@ -108,30 +108,26 @@
 </template>
 
 <script lang="ts" setup>
-import { useItemsStore } from "~/stores/items";
-import { useSearchStore } from "~/stores/search";
-import { useChatLikeStore } from "~/stores/chat-like";
-import { COURSE } from "~/models/courseWithAll";
+import { useTrendStore } from "~/stores/trend";
+import { TREND } from "~/models/trend";
 import { parseDateTimeFormat } from "~~/utils/date";
 import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);
-const itemsStore = useItemsStore();
-const searchStore = useSearchStore();
-const chatLikeStore = useChatLikeStore();
+const trendStore = useTrendStore();
 
 const searchNext = async () => {
   if (isIntersect.value) {
     return;
   }
   isIntersect.value = true;
-  await searchStore.searchNext();
+  await trendStore.searchNext();
   isIntersect.value = false;
 };
 
 const clearAndSearch = async () => {
-  await searchStore.clear();
-  await searchStore.searchNext();
+  await trendStore.clear();
+  await trendStore.searchNext();
 };
 
 const keywordShortener = (keyword: string) => {
