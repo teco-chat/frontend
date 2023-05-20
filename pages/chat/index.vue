@@ -84,6 +84,13 @@
                   <div class="justify-self-end">
                     <v-icon
                       class="me-2"
+                      icon="mdi-comment-text-outline"
+                    ></v-icon>
+                    <span class="subheading me-4">{{
+                      chat.commentCount 
+                    }}</span>
+                    <v-icon
+                      class="me-2"
                       icon="mdi-comment-question-outline"
                     ></v-icon>
                     <span class="subheading me-4">{{
