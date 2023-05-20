@@ -54,7 +54,7 @@
           <v-textarea
             v-model="chatStore.query"
             variant="solo"
-            label="질문을 입력해주세요. 줄바꿈은 Shift + Enter입니다."
+            label="질문을 입력해주세요. 줄바꿈은 Shift + Enter 입니다."
             append-inner-icon="mdi-arrow-right"
             clearable
             clear-icon="mdi-close-circle"
