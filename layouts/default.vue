@@ -11,7 +11,7 @@
       <v-btn variant="text" align="left" to="/chat">채팅 목록</v-btn>
       <v-spacer></v-spacer>
       <v-btn @click="navigateTo('/like')" icon="mdi-heart-outline" color="red"></v-btn>
-      <v-btn @click="toggleTheme" :icon="themeIcon"></v-btn>
+      <v-btn @click="toggleTheme" :icon="commentStore.icon"></v-btn>
       <v-btn variant="text" icon="mdi-account-outline">
         <v-icon>mdi-account-outline</v-icon>
         <v-menu activator="parent">
@@ -33,20 +33,15 @@
 
 <script lang="ts" setup>
 import { useTheme } from "vuetify";
+import { useCommonStore } from "~/stores/common";
 
+const commentStore = useCommonStore();
 const theme = useTheme();
-const themeIcon = ref("mdi-weather-sunny");
+theme.global.name.value = commentStore.theme;
 
 const toggleTheme = () => {
-  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
-  themeIcon.value =
-    themeIcon.value == "mdi-weather-night"
-      ? "mdi-weather-sunny"
-      : "mdi-weather-night";
-};
-
-const member = () => {
-  navigateTo("/member");
+  commentStore.toggle();
+  theme.global.name.value = commentStore.theme;
 };
 </script>
 
