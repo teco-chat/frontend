@@ -1,8 +1,16 @@
 <template>
   <div>
     <v-container>
-      <h1>내가 좋아요한 채팅 목록</h1>
-      <br />
+      <h2 class="likeText">내가 좋아요 한 채팅</h2>
+      <br>
+      <div class="tung" v-if="chatLikeItemsStore.items.length == 0">
+        텅~
+      </div>
+      <div class="tungText" v-if="chatLikeItemsStore.items.length == 0">
+        내가 좋아요 한 채팅이 없어요.
+        <br />
+        다른 크루들의 채팅에 좋아요를 눌러보는건 어떨까요?
+      </div>
       <v-row>
         <v-col
           v-for="chat in chatLikeItemsStore.items"
@@ -101,6 +109,7 @@
 <script lang="ts" setup>
 import { useChatLikeItemsStore } from "~/stores/chat-like-items";
 import { parseDateTimeFormat } from "~~/utils/date";
+import { keywordShortener } from "~~/utils/keyword";
 import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);
@@ -120,10 +129,6 @@ const clearAndSearch = async () => {
   await chatLikeItemsStore.searchNext();
 };
 
-const keywordShortener = (keyword: string) => {
-  return keyword.substring(0, 20) + (keyword.length > 20 ? "..." : "");
-};
-
 clearAndSearch();
 </script>
 
@@ -132,5 +137,22 @@ clearAndSearch();
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+.likeText {
+  font-family: "IBM Plex Sans KR", Arial, Verdana, Tahoma, sans-serif;
+}
+
+.tung {
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-size: 250px;
+  text-align: center;
+}
+
+.tungText {
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-size: 20px;
+  color: gray;
+  text-align: center;
 }
 </style>

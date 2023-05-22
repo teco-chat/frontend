@@ -1,8 +1,4 @@
 export const TREND = {
-  ALL: {
-    key: "전체",
-    value: "ALL",
-  },
   TODAY: {
     key: "오늘",
     value: "TODAY",
@@ -18,5 +14,9 @@ export const TREND = {
   YEAR: {
     key: "올해",
     value: "YEAR",
+  },
+  ALL: {
+    key: "전체",
+    value: "ALL",
   },
 } as const;

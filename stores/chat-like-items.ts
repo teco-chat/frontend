@@ -11,7 +11,7 @@ export const useChatLikeItemsStore = defineStore("chat-like-items", () => {
       return;
     }
     load.value = true;
-    const param = "?page=" + page.value + "&size=30";
+    const param = "?page=" + page.value + "&size=50";
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/chat-likes" + param,
       {

@@ -18,6 +18,14 @@
           </v-chip>
         </v-chip-group>
       </div>
+      <div class="tung" v-if="trendStore.items.length == 0">
+        텅~
+      </div>
+      <div class="tungText" v-if="trendStore.items.length == 0">
+        요즘 뜨는 채팅이 없어요.
+        <br />
+        다른 크루들의 채팅에 좋아요를 눌러보는건 어떨까요?
+      </div>
       <v-row>
         <v-col
           v-for="chat in trendStore.items"
@@ -117,6 +125,7 @@
 import { useTrendStore } from "~/stores/trend";
 import { TREND } from "~/models/trend";
 import { parseDateTimeFormat } from "~~/utils/date";
+import { keywordShortener } from "~~/utils/keyword";
 import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);
@@ -136,10 +145,6 @@ const clearAndSearch = async () => {
   await trendStore.searchNext();
 };
 
-const keywordShortener = (keyword: string) => {
-  return keyword.substring(0, 20) + (keyword.length > 20 ? "..." : "");
-};
-
 clearAndSearch();
 </script>
 
@@ -148,5 +153,18 @@ clearAndSearch();
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+.tung {
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-size: 250px;
+  text-align: center;
+}
+
+.tungText {
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-size: 20px;
+  color: gray;
+  text-align: center;
 }
 </style>

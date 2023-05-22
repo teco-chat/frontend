@@ -119,6 +119,7 @@ import { useSearchStore } from "~/stores/search";
 import { useChatLikeStore } from "~/stores/chat-like";
 import { COURSE } from "~/models/courseWithAll";
 import { parseDateTimeFormat } from "~~/utils/date";
+import { keywordShortener } from "~~/utils/keyword";
 import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);
@@ -138,10 +139,6 @@ const searchNext = async () => {
 const clearAndSearch = async () => {
   await searchStore.clear();
   await searchStore.searchNext();
-};
-
-const keywordShortener = (keyword: string) => {
-  return keyword.substring(0, 20) + (keyword.length > 20 ? "..." : "");
 };
 
 clearAndSearch();
