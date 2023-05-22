@@ -19,7 +19,7 @@
         </v-chip-group>
       </div>
       <div class="tung" v-if="trendStore.items.length == 0">
-        텅~
+        <v-icon class="me-2" icon="mdi-robot-dead-outline"></v-icon>
       </div>
       <div class="tungText" v-if="trendStore.items.length == 0">
         요즘 뜨는 채팅이 없어요.
@@ -158,6 +158,7 @@ clearAndSearch();
 .tung {
   font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
   font-size: 250px;
+  color: gray;
   text-align: center;
 }
 

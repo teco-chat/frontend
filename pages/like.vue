@@ -4,7 +4,7 @@
       <h2 class="likeText">내가 좋아요 한 채팅</h2>
       <br>
       <div class="tung" v-if="chatLikeItemsStore.items.length == 0">
-        텅~
+        <v-icon class="me-2" icon="mdi-robot-dead-outline"></v-icon>
       </div>
       <div class="tungText" v-if="chatLikeItemsStore.items.length == 0">
         내가 좋아요 한 채팅이 없어요.
@@ -146,6 +146,7 @@ clearAndSearch();
 .tung {
   font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
   font-size: 250px;
+  color: gray;
   text-align: center;
 }
 
