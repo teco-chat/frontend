@@ -6,7 +6,7 @@ export const useTrendStore = defineStore("trend", () => {
   const page = ref(0);
   const load = ref(false);
   const trendIndex = ref(0);
-  const trend = [TREND.ALL, TREND.TODAY, TREND.WEEK, TREND.MONTH, TREND.YEAR];
+  const trend = [TREND.TODAY, TREND.WEEK, TREND.MONTH, TREND.YEAR, TREND.ALL];
 
   const searchNext = async () => {
     if (load.value) {
