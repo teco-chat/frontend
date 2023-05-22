@@ -101,6 +101,7 @@
 <script lang="ts" setup>
 import { useChatLikeItemsStore } from "~/stores/chat-like-items";
 import { parseDateTimeFormat } from "~~/utils/date";
+import { keywordShortener } from "~~/utils/keyword";
 import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);
@@ -118,10 +119,6 @@ const searchNext = async () => {
 const clearAndSearch = async () => {
   await chatLikeItemsStore.clear();
   await chatLikeItemsStore.searchNext();
-};
-
-const keywordShortener = (keyword: string) => {
-  return keyword.substring(0, 20) + (keyword.length > 20 ? "..." : "");
 };
 
 clearAndSearch();
