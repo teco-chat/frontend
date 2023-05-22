@@ -18,7 +18,7 @@ export const useSearchStore = defineStore("search", () => {
       course[courseIndex.value].value +
       "&page=" +
       page.value +
-      "&size=30";
+      "&size=50";
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/chats" + param
     );
