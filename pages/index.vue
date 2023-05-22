@@ -1,8 +1,7 @@
 <template>
   <div>
     <v-container class="justify-center">
-      <h1>안녕하세요.</h1>
-      <h1>우아한테크코스 크루들을 위한 Chat-GPT 서비스입니다.</h1>
+      <h2>우아한테크코스 크루들을 위한 Chat-GPT 서비스입니다.</h2>
       <br />
       <div v-for="message in chatStore.item.messages" :key="message.id">
         <v-card align="left">
