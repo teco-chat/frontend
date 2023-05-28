@@ -94,7 +94,7 @@
               v-bind="props"
               color="error"
               variant="outlined"
-              :append-icon="likeIcon"
+              :prepend-icon="likeIcon"
               @click="like"
               >좋아요 {{ itemStore.item.likeCount }}</v-btn
             >
@@ -105,7 +105,7 @@
         <v-btn
           color="success"
           variant="outlined"
-          append-icon="mdi-content-copy"
+          prepend-icon="mdi-content-copy"
           @click="copyAlert=true"
           >채팅 복사</v-btn
         >
@@ -163,11 +163,12 @@
         location="center"
       >
         <div class="text-subtitle-1 pb-2">
-          정말 복사하시겠습니까?</div>
+          채팅 복사 후 GPT 사용화면으로 넘어갑니다.<br>
+          복사하시겠습니까?</div>
         <template v-slot:actions>
-          <v-btn variant="outlined" color="success" @click="copyChat">복사</v-btn>
+          <v-btn variant="outlined" color="success" prepend-icon="mdi-content-copy" @click="copyChat">복사</v-btn>
           &nbsp;
-          <v-btn variant="outlined" color="error" @click="copyAlert = false"> 취소 </v-btn>
+          <v-btn variant="outlined" color="error" prepend-icon="mdi-close" @click="copyAlert = false"> 취소 </v-btn>
         </template>
       </v-snackbar>
     </v-container>
@@ -225,4 +226,5 @@ const like = async () => {
 };
 </script>
 
-<style></style>
+<style>
+</style>
