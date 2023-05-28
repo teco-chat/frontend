@@ -88,23 +88,26 @@
       </div>
       <br />
       <v-card align="center" max-width="800px" variant="text">
-        <v-divider></v-divider>
         <v-tooltip location="top" align="center">
           <template v-slot:activator="{ props }">
             <v-btn
               v-bind="props"
-              size="small"
               color="error"
-              variant="text"
-              :icon="likeIcon"
+              variant="outlined"
+              :append-icon="likeIcon"
               @click="like"
-            ></v-btn>
+              >좋아요 {{ itemStore.item.likeCount }}</v-btn
+            >
           </template>
           <span v-html="itemStore.likeCrewName()"></span>
         </v-tooltip>
-
-        <br />
-        {{ itemStore.item.likeCount }}
+        &nbsp;
+        <v-btn
+          color="secondary"
+          variant="outlined"
+          append-icon="mdi-content-copy"
+          >채팅 복제</v-btn
+        >
       </v-card>
       <v-card align="left" max-width="800px" variant="text">
         <br />
