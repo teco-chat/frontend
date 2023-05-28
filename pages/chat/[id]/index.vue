@@ -88,23 +88,27 @@
       </div>
       <br />
       <v-card align="center" max-width="800px" variant="text">
-        <v-divider></v-divider>
         <v-tooltip location="top" align="center">
           <template v-slot:activator="{ props }">
             <v-btn
               v-bind="props"
-              size="small"
               color="error"
-              variant="text"
-              :icon="likeIcon"
+              variant="outlined"
+              :append-icon="likeIcon"
               @click="like"
-            ></v-btn>
+              >좋아요 {{ itemStore.item.likeCount }}</v-btn
+            >
           </template>
           <span v-html="itemStore.likeCrewName()"></span>
         </v-tooltip>
-
-        <br />
-        {{ itemStore.item.likeCount }}
+        &nbsp;
+        <v-btn
+          color="success"
+          variant="outlined"
+          append-icon="mdi-content-copy"
+          @click="copyAlert=true"
+          >채팅 복사</v-btn
+        >
       </v-card>
       <v-card align="left" max-width="800px" variant="text">
         <br />
@@ -152,6 +156,20 @@
         >
         </v-textarea>
       </v-card>
+      <v-snackbar
+        v-model="copyAlert"
+        color="background"
+        vertical
+        location="center"
+      >
+        <div class="text-subtitle-1 pb-2">
+          정말 복사하시겠습니까?</div>
+        <template v-slot:actions>
+          <v-btn variant="outlined" color="success" @click="copyChat">복사</v-btn>
+          &nbsp;
+          <v-btn variant="outlined" color="error" @click="copyAlert = false"> 취소 </v-btn>
+        </template>
+      </v-snackbar>
     </v-container>
   </div>
 </template>
@@ -160,20 +178,30 @@ import { useItemStore } from "~/stores/item";
 import { useAuthStore } from "~/stores/auth";
 import { useCommentStore } from "~/stores/comment";
 import { useChatLikeStore } from "~/stores/chat-like";
+import { useCopyChatStore } from "~/stores/copy-chat";
 import Tiptap from "~/components/Tiptap.vue";
 import { parseDateTimeFormat } from "~~/utils/date";
 import { scrollToBottom } from "~~/utils/window";
 import { useChatStore } from "~/stores/chat";
 
+const copyAlert = ref(false);
 const itemStore = useItemStore();
 await itemStore.searchById(useRoute().params.id.toString());
 await itemStore.searchLikeCrewById(useRoute().params.id.toString());
 const commentStore = useCommentStore();
 await commentStore.searchByChatId(useRoute().params.id.toString());
 const chatLikeStore = useChatLikeStore();
+const copyChatStore = useCopyChatStore();
 const likeIcon = ref(
   itemStore.item.isAlreadyClickLike ? "mdi-heart" : "mdi-heart-outline"
 );
+
+const copyChat = async () => {
+  const id = await copyChatStore.copy(useRoute().params.id.toString());
+  useChatStore().startNewChatWithId(id);
+  navigateTo("/");
+  scrollToBottom();
+};
 
 const addComment = async () => {
   await commentStore.add(useRoute().params.id.toString());
