@@ -10,14 +10,21 @@
       <v-btn variant="text" align="left" to="/chat">채팅 목록</v-btn>
       <v-btn variant="text" align="left" to="/trend">요즘 뜨는 채팅</v-btn>
       <v-spacer></v-spacer>
-      <v-btn @click="navigateTo('/like')" icon="mdi-heart-outline" color="red"></v-btn>
+      <v-btn
+        @click="navigateTo('/like')"
+        icon="mdi-heart-outline"
+        color="red"
+      ></v-btn>
       <v-btn @click="toggleTheme" :icon="commentStore.icon"></v-btn>
       <v-btn variant="text" icon="mdi-account-outline">
         <v-icon>mdi-account-outline</v-icon>
         <v-menu activator="parent">
           <v-list>
             <v-list-item @click="navigateTo('/member')">
-              <v-list-item-title>정보 수정</v-list-item-title>
+              <v-list-item-title>
+                <v-icon icon="mdi-account-edit-outline"></v-icon>
+                정보 수정
+              </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
