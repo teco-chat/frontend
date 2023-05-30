@@ -54,7 +54,7 @@
           <br />
         </v-card-item>
         <v-card-item align="right">
-            <v-btn variant="outlined" color="success" @click="login"
+            <v-btn variant="outlined" prepend-icon="mdi-login-variant" color="success" @click="login"
               ><h2>완료</h2></v-btn
             >
         </v-card-item>
