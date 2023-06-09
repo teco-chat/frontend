@@ -115,7 +115,7 @@
 
 <script lang="ts" setup>
 import { useItemsStore } from "~/stores/items";
-import { useSearchStore } from "~/stores/search";
+import { usePageStore } from "~/stores/page";
 import { useChatLikeStore } from "~/stores/chat-like";
 import { COURSE } from "~/models/courseWithAll";
 import { parseDateTimeFormat } from "~~/utils/date";
@@ -124,7 +124,7 @@ import Tiptap from "~/components/Tiptap.vue";
 
 const isIntersect = ref(false);
 const itemsStore = useItemsStore();
-const searchStore = useSearchStore();
+const searchStore = usePageStore();
 const chatLikeStore = useChatLikeStore();
 
 const searchNext = async () => {

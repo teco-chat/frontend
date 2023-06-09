@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { COURSE } from "~/models/courseWithAll";
 import { useItemsStore } from "./items";
 
-export const useSearchStore = defineStore("search", () => {
+export const usePageStore = defineStore("page", () => {
   const courseIndex = ref(0);
   const page = ref(0);
   const load = ref(false);
