@@ -5,17 +5,19 @@ export const useSearchStore = defineStore("search", () => {
   const query = ref("");
   const items: any = ref([]);
   const isEmptyResult = ref(false);
+  const lastQuery = ref("");
 
   const search = async () => {
     if (load.value) {
       return;
     }
     load.value = true;
-    const param = "?title=" + query.value;
+    const param = "?title=" + query.value + "&size=50";
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/chats" + param
     );
 
+    lastQuery.value = query.value;
     items.value = [];
     query.value = "";
     isEmptyResult.value = true;
@@ -29,6 +31,7 @@ export const useSearchStore = defineStore("search", () => {
   const clear = async () => {
     items.value = [];
     query.value = "";
+    lastQuery.value = "";
     isEmptyResult.value = false;
   };
 
@@ -36,5 +39,5 @@ export const useSearchStore = defineStore("search", () => {
     return isEmptyResult.value && items.value.length == 0;
   }
 
-  return { items, query, search, clear, isEmpty };
+  return { items, query, lastQuery, search, clear, isEmpty };
 });
