@@ -12,7 +12,7 @@
       ></v-text-field>
       <br />
       <div class="resultText" v-if="searchStore.items.length != 0">
-        {{ searchStore.items.length }} 개의 결과가 있어요.
+        "{{ searchStore.lastQuery }}"에 대한 {{ searchStore.items.length }}개의 채팅이 있어요.
       </div>
       <br>
       <div class="tung" v-if="searchStore.isEmpty()">
@@ -118,6 +118,8 @@
 import { useSearchStore } from "~/stores/search";
 
 const searchStore = useSearchStore();
+searchStore.clear();
+
 const search = async () => {
   await searchStore.search();
 };
@@ -126,6 +128,12 @@ const search = async () => {
 <style scoped>
 * {
   font-family: "IBM Plex Sans KR", Arial, Verdana, Tahoma, sans-serif;
+}
+
+.card-actions {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .tung {
