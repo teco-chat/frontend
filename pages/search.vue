@@ -1,26 +1,29 @@
 <template>
   <div>
-    <v-container>
-      <div class="pa-4">
-        <v-chip-group
-          selected-class="text-secondary"
-          column
-          v-model="searchStore.courseIndex"
-          mandatory
-        >
-          <v-chip
-            v-for="tag in COURSE"
-            :key="tag"
-            filter
-            @click="clearAndSearch"
-          >
-            {{ tag.key }}
-          </v-chip>
-        </v-chip-group>
+    <v-container align="center">
+      <v-text-field
+        label="검색어를 입력해주세요."
+        v-model="searchStore.query"
+        hide-details
+        variant="outlined"
+        append-inner-icon="mdi-magnify"
+        @click:append-inner="search"
+        @keypress.enter="search"
+      ></v-text-field>
+      <br />
+      <div class="resultText" v-if="searchStore.items.length != 0">
+        {{ searchStore.items.length }} 개의 결과가 있어요.
+      </div>
+      <br>
+      <div class="tung" v-if="searchStore.isEmpty()">
+        <v-icon class="me-2" icon="mdi-robot-confused-outline"></v-icon>
+      </div>
+      <div class="tungText" v-if="searchStore.isEmpty()">
+        검색 결과가 없어요!
       </div>
       <v-row>
         <v-col
-          v-for="chat in itemsStore.items"
+          v-for="chat in searchStore.items"
           cols="12"
           sm="4"
           lg="4"
@@ -108,46 +111,40 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-card v-intersect="searchNext"></v-card>
     </v-container>
   </div>
 </template>
-
 <script lang="ts" setup>
-import { useItemsStore } from "~/stores/items";
-import { usePageStore } from "~/stores/page";
-import { useChatLikeStore } from "~/stores/chat-like";
-import { COURSE } from "~/models/courseWithAll";
-import { parseDateTimeFormat } from "~~/utils/date";
-import { keywordShortener } from "~~/utils/keyword";
-import Tiptap from "~/components/Tiptap.vue";
+import { useSearchStore } from "~/stores/search";
 
-const isIntersect = ref(false);
-const itemsStore = useItemsStore();
-const searchStore = usePageStore();
-const chatLikeStore = useChatLikeStore();
-
-const searchNext = async () => {
-  if (isIntersect.value) {
-    return;
-  }
-  isIntersect.value = true;
-  await searchStore.searchNext();
-  isIntersect.value = false;
+const searchStore = useSearchStore();
+const search = async () => {
+  await searchStore.search();
 };
-
-const clearAndSearch = async () => {
-  await searchStore.clear();
-  await searchStore.searchNext();
-};
-
-clearAndSearch();
 </script>
 
 <style scoped>
-.card-actions {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+* {
+  font-family: "IBM Plex Sans KR", Arial, Verdana, Tahoma, sans-serif;
+}
+
+.tung {
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-size: 250px;
+  color: gray;
+  text-align: center;
+}
+
+.tungText {
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-size: 20px;
+  color: gray;
+  text-align: center;
+}
+
+.resultText {
+  font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
+  font-size: 20px;
+  text-align: left;
 }
 </style>

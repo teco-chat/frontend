@@ -11,6 +11,10 @@
       <v-btn variant="text" align="left" to="/trend">요즘 뜨는 채팅</v-btn>
       <v-spacer></v-spacer>
       <v-btn
+        @click="navigateTo('/search')"
+        icon="mdi-magnify"
+      ></v-btn>
+      <v-btn
         @click="navigateTo('/like')"
         icon="mdi-heart-outline"
         color="red"

@@ -1,41 +1,40 @@
 import { defineStore } from "pinia";
-import { COURSE } from "~/models/courseWithAll";
-import { useItemsStore } from "./items";
 
 export const useSearchStore = defineStore("search", () => {
-  const courseIndex = ref(0);
-  const page = ref(0);
   const load = ref(false);
-  const course = [COURSE.ALL, COURSE.BE, COURSE.FE, COURSE.AD];
+  const query = ref("");
+  const items: any = ref([]);
+  const isEmptyResult = ref(false);
 
-  const searchNext = async () => {
+  const search = async () => {
     if (load.value) {
       return;
     }
     load.value = true;
-    const param =
-      "?course=" +
-      course[courseIndex.value].value +
-      "&page=" +
-      page.value +
-      "&size=50";
+    const param = "?title=" + query.value;
     const { data, error } = await useFetch(
       useRuntimeConfig().public.baseUrl + "/chats" + param
     );
 
-    const itemsStore = useItemsStore();
+    items.value = [];
+    query.value = "";
+    isEmptyResult.value = true;
     const result: any = data;
     result.value["content"].forEach((chat: any) => {
-      itemsStore.add(chat);
+      items.value.push(chat);
     });
-    page.value += 1;
     load.value = false;
   };
 
   const clear = async () => {
-    await useItemsStore().clear();
-    page.value = 0;
+    items.value = [];
+    query.value = "";
+    isEmptyResult.value = false;
   };
 
-  return { courseIndex, searchNext, clear };
+  const isEmpty = () => {
+    return isEmptyResult.value && items.value.length == 0;
+  }
+
+  return { items, query, search, clear, isEmpty };
 });
