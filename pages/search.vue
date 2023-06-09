@@ -128,6 +128,12 @@ const search = async () => {
   font-family: "IBM Plex Sans KR", Arial, Verdana, Tahoma, sans-serif;
 }
 
+.card-actions {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 .tung {
   font-family: "Do Hyeon", Arial, Verdana, Tahoma, sans-serif;
   font-size: 250px;
