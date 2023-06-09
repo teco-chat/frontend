@@ -118,6 +118,8 @@
 import { useSearchStore } from "~/stores/search";
 
 const searchStore = useSearchStore();
+searchStore.clear();
+
 const search = async () => {
   await searchStore.search();
 };
