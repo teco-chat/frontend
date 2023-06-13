@@ -4,9 +4,11 @@ import { useAuthStore } from "./auth";
 
 export const useChatStore = defineStore("chat", () => {
   const query = ref("");
-  const item: any = ref({ messages: [] });
+  const item = ref({ messages: [] });
   const load = ref(false);
   const chatId = ref(0);
+  let ws;
+  const SOCKET_END = "[DONE] - ID:";
 
   const clear = () => {
     query.value = "";
@@ -20,7 +22,38 @@ export const useChatStore = defineStore("chat", () => {
     chatId.value = 0;
   };
 
-  const startNewChatWithId = async (id: any) => {
+  const streamChat = async () => {
+    if (!load.value) {
+      load.value = true;
+      addMessage("", "assistant");
+      const url = chatId.value == 0 ? "/stream/chats" : "/stream/chats/" + chatId.value;
+      const queryString = "?name=" + useAuthStore().encodedName();
+      ws = new WebSocket(useRuntimeConfig().public.wsUrl + url + queryString);
+    }
+    
+    ws.onopen = (event) => {
+      ws.send(query.value);
+      query.value = "";
+    }
+    
+    ws.onmessage = function (event) {
+      let result = '' + event.data;
+      if (result.startsWith(SOCKET_END)) {
+        chatId.value = parseInt(result.replace(SOCKET_END, ''));
+      } else {
+        item.value.messages[item.value.messages.length - 1].content += result;
+      }
+    }
+    
+    ws.onclose = (event) => {
+      load.value = false;
+      item.value.messages[item.value.messages.length - 1].content = replaceCodeFences(
+        item.value.messages[item.value.messages.length - 1].content
+      );
+    }
+  }
+
+  const startNewChatWithId = async (id) => {
     if (load.value) {
       return;
     }
@@ -36,7 +69,7 @@ export const useChatStore = defineStore("chat", () => {
       }
     );
 
-    const result: any = data;
+    const result = data;
     item.value = result.value;
     for (let i = 0; i < item.value.messages.length; i++) {
       item.value.messages[i].content = replaceCodeFences(
@@ -57,39 +90,10 @@ export const useChatStore = defineStore("chat", () => {
   };
 
   const answer = async () => {
-    if (load.value || query.value == "") {
-      return;
-    }
-    load.value = true;
-
-    const url = chatId.value == 0 ? "/chats" : "/chats/" + chatId.value;
-    const { data, error } = await useFetch(
-      useRuntimeConfig().public.baseUrl + url,
-      {
-        headers: {
-          name: useAuthStore().encodedName(),
-        },
-        body: {
-          message: query.value,
-          token: 0,
-        },
-        method: "POST",
-      }
-    );
-
-    if (error.value) {
-      load.value = false;
-      addMessage("다시 요청해주세요. 서버가 응답할 수 없습니다.", "assistant");
-      return;
-    }
-    query.value = "";
-    const result: any = data.value;
-    addMessage(result["content"], "assistant");
-    chatId.value = result["chatId"];
-    load.value = false;
+    streamChat();
   };
 
-  const addMessage = (content: string, role: string) => {
+  const addMessage = (content, role) => {
     item.value.messages.push({
       content: replaceCodeFences(content),
       role: role

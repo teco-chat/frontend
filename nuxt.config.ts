@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseUrl: process.env.BASE_URL || "",
+      wsUrl: process.env.WS_URL || "",
     },
   },
 });
