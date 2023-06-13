@@ -9,3 +9,5 @@ export const replaceCodeFences = (input: String) => {
     })
     .replace(/\n/g, "<br>");
 };
+
+export const codeFencesRegex = /```([\w-]*)\n([\s\S]*?)\n```/g;
