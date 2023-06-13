@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { replaceCodeFences } from "~~/utils/code";
+import { codeFencesRegex, replaceCodeFences } from "~~/utils/code";
 import { useAuthStore } from "./auth";
 
 export const useChatStore = defineStore("chat", () => {
@@ -42,14 +42,16 @@ export const useChatStore = defineStore("chat", () => {
         chatId.value = parseInt(result.replace(SOCKET_END, ''));
       } else {
         item.value.messages[item.value.messages.length - 1].content += result;
+        if (item.value.messages[item.value.messages.length - 1].content.match(codeFencesRegex)) {
+          item.value.messages[item.value.messages.length - 1].content = replaceCodeFences(
+            item.value.messages[item.value.messages.length - 1].content
+          );
+        }
       }
     }
     
     ws.onclose = (event) => {
       load.value = false;
-      item.value.messages[item.value.messages.length - 1].content = replaceCodeFences(
-        item.value.messages[item.value.messages.length - 1].content
-      );
     }
   }
 
@@ -90,7 +92,7 @@ export const useChatStore = defineStore("chat", () => {
   };
 
   const answer = async () => {
-    streamChat();
+    await streamChat();
   };
 
   const addMessage = (content, role) => {
