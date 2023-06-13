@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { codeFencesRegex, replaceCodeFences } from "~~/utils/code";
+import { scrollToBottom } from "~~/utils/window";
 import { useAuthStore } from "./auth";
 
 export const useChatStore = defineStore("chat", () => {
@@ -52,6 +53,7 @@ export const useChatStore = defineStore("chat", () => {
     
     ws.onclose = (event) => {
       load.value = false;
+      scrollToBottom();
     }
   }
 
