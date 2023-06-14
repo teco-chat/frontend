@@ -1,5 +1,4 @@
 export const replaceCodeFences = (input: String) => {
-  const codeFencesRegex = /```([\w-]*)\n([\s\S]*?)\n```/g;
   // 코드블록 입력 여부 체크를 위한 변수
   let hasCodeFences = false;
   return input
