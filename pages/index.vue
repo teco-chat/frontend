@@ -114,7 +114,7 @@ const chat = async () => {
 
 const start = async (id: any) => {
   chatStore.clearAll();
-  await chatStore.startNewChatWithId(id);
+  await chatStore.startWithChatId(id);
   chatsStore.clearAll();
   await chatsStore.searchNext();
   scrollToBottom();
