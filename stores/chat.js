@@ -42,10 +42,10 @@ export const useChatStore = defineStore("chat", () => {
       if (result.startsWith(SOCKET_END)) {
         chatId.value = parseInt(result.replace(SOCKET_END, ''));
       } else {
-        item.value.messages[item.value.messages.length - 1].content += result;
-        if (item.value.messages[item.value.messages.length - 1].content.match(codeFencesRegex)) {
-          item.value.messages[item.value.messages.length - 1].content = replaceCodeFences(
-            item.value.messages[item.value.messages.length - 1].content
+        item.value.messages[lastIndexOfMessages()].content += result;
+        if (item.value.messages[lastIndexOfMessages()].content.match(codeFencesRegex)) {
+          item.value.messages[lastIndexOfMessages()].content = replaceCodeFences(
+            item.value.messages[lastIndexOfMessages()].content
           );
         }
       }
@@ -53,9 +53,14 @@ export const useChatStore = defineStore("chat", () => {
     
     ws.onclose = (event) => {
       load.value = false;
+      item.value.messages[lastIndexOfMessages()].content = replaceCodeFences(
+        item.value.messages[lastIndexOfMessages()].content
+      );
       scrollToBottom();
     }
   }
+
+  const lastIndexOfMessages = () => item.value.messages.length - 1;
 
   const startNewChatWithId = async (id) => {
     if (load.value) {
