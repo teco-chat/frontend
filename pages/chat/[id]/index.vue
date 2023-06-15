@@ -107,6 +107,7 @@
           variant="outlined"
           prepend-icon="mdi-content-copy"
           @click="copyAlert=true"
+          v-if="authStore.isValidCredential()"
           >채팅 복사</v-btn
         >
       </v-card>
@@ -125,7 +126,7 @@
               {{ parseDateTimeFormat(comment.createdAt) }}
             </v-card-subtitle>
             <template
-              v-if="useAuthStore().name == comment.crewName"
+              v-if="authStore.name == comment.crewName"
               v-slot:append
             >
               <v-icon
@@ -141,7 +142,7 @@
         </v-card>
         <br />
       </div>
-      <v-card align="left" max-width="800px" variant="outlined">
+      <v-card align="left" max-width="800px" variant="outlined" v-if="authStore.isValidCredential()">
         <v-textarea
           v-model="commentStore.text"
           variant="solo"
@@ -187,6 +188,7 @@ import { useChatStore } from "~/stores/chat";
 
 const copyAlert = ref(false);
 const itemStore = useItemStore();
+const authStore = useAuthStore();
 await itemStore.searchById(useRoute().params.id.toString());
 await itemStore.searchLikeCrewById(useRoute().params.id.toString());
 const commentStore = useCommentStore();
@@ -218,6 +220,9 @@ const appendNewLine = (event: any) => {
 };
 
 const like = async () => {
+  if (authStore.isInvalidCredential()) {
+    return;
+  }
   await chatLikeStore.like(useRoute().params.id.toString());
   await itemStore.like();
   likeIcon.value = itemStore.item.isAlreadyClickLike

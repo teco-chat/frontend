@@ -12,7 +12,14 @@ export const useAuthStore = defineStore(
       return courseIndex.value == 4 || !name.value;
     };
 
+    const isValidCredential = () => {
+      return courseIndex.value != 4 && name.value;
+    }
+
     const encodedName = () => {
+      if (isInvalidCredential()) {
+        return "VEVDTw==";
+      }
       const uriComponent = unescape(encodeURIComponent(name.value));
       return btoa(uriComponent);
     };
@@ -36,7 +43,7 @@ export const useAuthStore = defineStore(
       return error;
     };
 
-    return { courseIndex, name, isInvalidCredential, login, encodedName };
+    return { courseIndex, name, isInvalidCredential, isValidCredential, login, encodedName };
   },
   { persist: true }
 );
