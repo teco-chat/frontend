@@ -88,18 +88,6 @@
       </div>
       <br />
       <v-card align="center" max-width="800px" variant="text">
-        <v-snackbar :timeout="2000">
-          <template v-slot:activator="{ props }">
-            <v-btn
-              variant="outlined"
-              prepend-icon="mdi-link-variant"
-              v-bind="props"
-              >링크 복사
-            </v-btn>
-          </template>
-          링크가 복사되었습니다.
-        </v-snackbar>
-        &nbsp;
         <v-tooltip location="top" align="center">
           <template v-slot:activator="{ props }">
             <v-btn
@@ -122,6 +110,19 @@
           v-if="authStore.isValidCredential()"
           >채팅 복사</v-btn
         >
+        &nbsp;
+        <v-snackbar :timeout="2000">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              variant="outlined"
+              prepend-icon="mdi-link-variant"
+              v-bind="props"
+              @click="copyLink"
+              >링크 복사
+            </v-btn>
+          </template>
+          링크가 복사되었습니다.
+        </v-snackbar>
       </v-card>
       <v-card align="left" max-width="800px" variant="text">
         <br />
@@ -256,6 +257,12 @@ const like = async () => {
   likeIcon.value = itemStore.item.isAlreadyClickLike
     ? "mdi-heart"
     : "mdi-heart-outline";
+};
+
+const copyLink = () => {
+  window.navigator.clipboard.writeText(
+    "https://teco.chat/chat/" + useRoute().params.id.toString()
+  );
 };
 </script>
 
