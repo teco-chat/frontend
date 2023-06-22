@@ -106,10 +106,23 @@
           color="success"
           variant="outlined"
           prepend-icon="mdi-content-copy"
-          @click="copyAlert=true"
+          @click="copyAlert = true"
           v-if="authStore.isValidCredential()"
           >채팅 복사</v-btn
         >
+        &nbsp;
+        <v-snackbar :timeout="2000">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              variant="outlined"
+              prepend-icon="mdi-link-variant"
+              v-bind="props"
+              @click="copyLink"
+              >링크 복사
+            </v-btn>
+          </template>
+          링크가 복사되었습니다.
+        </v-snackbar>
       </v-card>
       <v-card align="left" max-width="800px" variant="text">
         <br />
@@ -125,10 +138,7 @@
               &nbsp; &nbsp;
               {{ parseDateTimeFormat(comment.createdAt) }}
             </v-card-subtitle>
-            <template
-              v-if="authStore.name == comment.crewName"
-              v-slot:append
-            >
+            <template v-if="authStore.name == comment.crewName" v-slot:append>
               <v-icon
                 size="small"
                 color="error"
@@ -142,7 +152,12 @@
         </v-card>
         <br />
       </div>
-      <v-card align="left" max-width="800px" variant="outlined" v-if="authStore.isValidCredential()">
+      <v-card
+        align="left"
+        max-width="800px"
+        variant="outlined"
+        v-if="authStore.isValidCredential()"
+      >
         <v-textarea
           v-model="commentStore.text"
           variant="solo"
@@ -164,12 +179,26 @@
         location="center"
       >
         <div class="text-subtitle-1 pb-2">
-          채팅 복사 후 GPT 사용화면으로 넘어갑니다.<br>
-          복사하시겠습니까?</div>
+          채팅 복사 후 GPT 사용화면으로 넘어갑니다.<br />
+          복사하시겠습니까?
+        </div>
         <template v-slot:actions>
-          <v-btn variant="outlined" color="success" prepend-icon="mdi-content-copy" @click="copyChat">복사</v-btn>
+          <v-btn
+            variant="outlined"
+            color="success"
+            prepend-icon="mdi-content-copy"
+            @click="copyChat"
+            >복사</v-btn
+          >
           &nbsp;
-          <v-btn variant="outlined" color="error" prepend-icon="mdi-close" @click="copyAlert = false"> 취소 </v-btn>
+          <v-btn
+            variant="outlined"
+            color="error"
+            prepend-icon="mdi-close"
+            @click="copyAlert = false"
+          >
+            취소
+          </v-btn>
         </template>
       </v-snackbar>
     </v-container>
@@ -229,7 +258,12 @@ const like = async () => {
     ? "mdi-heart"
     : "mdi-heart-outline";
 };
+
+const copyLink = () => {
+  window.navigator.clipboard.writeText(
+    "https://teco.chat/chats/" + useRoute().params.id.toString()
+  );
+};
 </script>
 
-<style>
-</style>
+<style></style>

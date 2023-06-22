@@ -31,7 +31,7 @@
           xxl="2"
           :key="chat.title"
         >
-          <v-card :to="'/chat/' + chat.id" align="left" min-height="240px">
+          <v-card :to="'/chats/' + chat.id" align="left" min-height="240px">
             <div class="d-flex mr-4 align-center">
               <v-chip
                 v-if="chat.course == 'BACKEND'"
