@@ -261,7 +261,7 @@ const like = async () => {
 
 const copyLink = () => {
   window.navigator.clipboard.writeText(
-    "https://teco.chat/chat/" + useRoute().params.id.toString()
+    "https://teco.chat/chats/" + useRoute().params.id.toString()
   );
 };
 </script>
