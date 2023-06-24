@@ -174,7 +174,6 @@
       </v-card>
       <v-snackbar
         v-model="copyAlert"
-        color="background"
         vertical
         location="center"
       >
