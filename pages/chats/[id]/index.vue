@@ -204,15 +204,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useItemStore } from "~/stores/item";
-import { useAuthStore } from "~/stores/auth";
-import { useCommentStore } from "~/stores/comment";
-import { useChatLikeStore } from "~/stores/chat-like";
-import { useCopyChatStore } from "~/stores/copy-chat";
 import Tiptap from "~/components/Tiptap.vue";
+import { useAuthStore } from "~/stores/auth";
+import { useChatStore } from "~/stores/chat";
+import { useChatLikeStore } from "~/stores/chat-like";
+import { useCommentStore } from "~/stores/comment";
+import { useCopyChatStore } from "~/stores/copy-chat";
+import { useItemStore } from "~/stores/item";
 import { parseDateTimeFormat } from "~~/utils/date";
 import { scrollToBottom } from "~~/utils/window";
-import { useChatStore } from "~/stores/chat";
 
 const copyAlert = ref(false);
 const itemStore = useItemStore();
@@ -229,7 +229,7 @@ const likeIcon = ref(
 
 const copyChat = async () => {
   const id = await copyChatStore.copy(useRoute().params.id.toString());
-  useChatStore().startNewChatWithId(id);
+  useChatStore().startWithChatId(id);
   navigateTo("/");
   scrollToBottom();
 };
